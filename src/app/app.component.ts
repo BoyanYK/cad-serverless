@@ -17,7 +17,7 @@ export class AppComponent {
   };
   userPool = new CognitoUserPool(this.poolData);
   userData = {
-    Username: 'BoyanYK', // your username here
+    Username: '', // your username here
     Pool: this.userPool
   };
   authenticationData = {
@@ -31,15 +31,30 @@ export class AppComponent {
   onSubmit() {
     alert("Attempting to login");
     this.authenticationData.Username = this.username;
+    this.userData.Username = this.username;
     this.authenticationData.Password = this.password;
     this.authenticationDetails = new AuthenticationDetails(this.authenticationData);
     this.cognitoUser = new CognitoUser(this.userData);
+    console.log(this.cognitoUser);
+    console.log(this.authenticationDetails);
     this.login(this.cognitoUser, this.authenticationDetails);
+    console.log("executed login");
   }
 
   onUpdatePassword() {
     alert("Attempting to Change Password");
-    this.cognitoUser.completeNewPasswordChallenge(this.password, null, this);
+    this.cognitoUser.completeNewPasswordChallenge(this.newPassword, {preferred_username: 'TestUser'}, {
+      onSuccess: function (result){
+        console.log('In the onSuccess.');
+      },
+      authSuccess: function (result){
+        //Password has been updated.
+        console.log('In the AuthSuccess.');
+      },
+      onFailure: function(err) {
+        console.log(err);
+      }
+    });
   }
 
   onLogout() {
@@ -51,11 +66,13 @@ export class AppComponent {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
         var accessToken = result.getAccessToken().getJwtToken();
-        alert("Succesfull Login!!");
+        console.log(accessToken);
+        //alert("Succesfull Login!!");
       },
 
       onFailure: function (err) {
-        alert(err);
+        console.log(err);
+        //alert(err);
       },
 
       mfaRequired: function (codeDeliveryDetails) {
@@ -64,7 +81,8 @@ export class AppComponent {
       },
 
       newPasswordRequired: function (userAttributes, requiredAttributes) {
-        alert("New Password Required");
+        console.log("new pass required");
+        //alert("New Password Required");
       }
     });
   }
