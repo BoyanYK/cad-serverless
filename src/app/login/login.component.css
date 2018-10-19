@@ -1,0 +1,17 @@
+.input-field {
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+form {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+}
+
+button {
+    right: 17.5%;
+    float: right;
+}

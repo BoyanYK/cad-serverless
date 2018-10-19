@@ -1,12 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class AppComponent {
+
+/* @NgModule({
+  exports: [
+    FormGroup,
+    FormControl
+  ]
+}) */
+
+export class LoginComponent {
+  loginForm = new FormGroup({
+    username: new FormControl(),
+    password: new FormControl()
+  });
+  
+  
+
+  updatePasswordForm = new FormGroup({
+    newPassword: new FormControl('')
+  });
+
   username: string;
   password: string;
   newPassword: string;
@@ -26,7 +46,6 @@ export class AppComponent {
   };
   cognitoUser;
   authenticationDetails;
-  
 
   onSubmit() {
     alert("Attempting to login");
@@ -86,4 +105,5 @@ export class AppComponent {
       }
     });
   }
+
 }

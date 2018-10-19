@@ -1,0 +1,25 @@
+<!-- //<div class="flexbox-parent"> -->
+  <div id="parent">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form_login">
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Username" formControlName="username">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Password" formControlName="password">
+      </mat-form-field>
+      <button mat-flat-button (click)="onSubmit()" id="Submit">Submit</button>
+    </form>
+  </div>
+  
+<!-- //</div> -->
+
+<!-- <form [formGroup]="updatePasswordForm">
+  <mat-form-field class="input-field">
+    <input matInput placeholder="New Password" formControlName="newPassword">
+  </mat-form-field>
+  <button mat-flat-button (click)="onUpdatePassword()">Update Password</button>
+</form>
+<br>
+<br>
+  <button mat-flat-button (click)="onLogout()">Logout</button>
+ -->

@@ -1,15 +1,1 @@
-
-<mat-form-field class="input-field">
-  <input matInput placeholder="Username" [(ngModel)]="username">
-</mat-form-field>
-<mat-form-field class="input-field">
-  <input matInput placeholder="Password" [(ngModel)]="password">
-</mat-form-field>
-<button mat-flat-button (click)="onSubmit()">Submit</button>
-<br>
-<mat-form-field class="input-field">
-  <input matInput placeholder="New Password" [(ngModel)]="newPassword">
-</mat-form-field>
-<button mat-flat-button (click)="onUpdatePassword()">Update Password</button>
-<br>
-<button mat-flat-button (click)="onLogout()">Logout</button>
+<router-outlet></router-outlet>
