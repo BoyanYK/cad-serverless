@@ -8,15 +8,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatInputModule} from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
-//import { AuthModule } from './auth/a'
+import { AuthModule } from './auth/auth.module'
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +26,9 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    AdminModule
+    AdminModule,
+    AuthModule,
+    //LoginComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

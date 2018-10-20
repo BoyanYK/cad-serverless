@@ -1,5 +1,5 @@
 <!-- //<div class="flexbox-parent"> -->
-  <div id="parent">
+  <div *ngIf="!authService.isLoggedIn" id="parent">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form_login">
       <mat-form-field class="input-field">
         <input matInput placeholder="Username" formControlName="username">
@@ -20,6 +20,6 @@
   <button mat-flat-button (click)="onUpdatePassword()">Update Password</button>
 </form>
 <br>
-<br>
+<br>-->
   <button mat-flat-button (click)="onLogout()">Logout</button>
- -->
+ <!-- -->

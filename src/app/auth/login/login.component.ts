@@ -1,6 +1,8 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router }      from '@angular/router';
+import { AuthService } from '../../admin/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,19 @@ import { FormGroup, FormControl } from '@angular/forms';
   ]
 }) */
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
+  message: string;
+
+  public authService: AuthService;
+  public router: Router;
+  ngOnInit(){
+    this.setMessage();
+  }
+
+  setMessage() {
+    this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
+  }
+
   loginForm = new FormGroup({
     username: new FormControl(),
     password: new FormControl()
@@ -27,8 +41,8 @@ export class LoginComponent {
     newPassword: new FormControl('')
   });
 
-  username: string;
-  password: string;
+  //username: string;
+  //password: string;
   newPassword: string;
   title = 'Project Management System';
   poolData = {
@@ -37,7 +51,7 @@ export class LoginComponent {
   };
   userPool = new CognitoUserPool(this.poolData);
   userData = {
-    Username: '', // your username here
+    Username: '',
     Pool: this.userPool
   };
   authenticationData = {
@@ -49,9 +63,9 @@ export class LoginComponent {
 
   onSubmit() {
     alert("Attempting to login");
-    this.authenticationData.Username = this.username;
-    this.userData.Username = this.username;
-    this.authenticationData.Password = this.password;
+    this.authenticationData.Username = this.loginForm.controls['username'].value,
+    this.userData.Username = this.loginForm.controls['username'].value,
+    this.authenticationData.Password = this.loginForm.controls['password'].value,
     this.authenticationDetails = new AuthenticationDetails(this.authenticationData);
     this.cognitoUser = new CognitoUser(this.userData);
     console.log(this.cognitoUser);
@@ -62,7 +76,7 @@ export class LoginComponent {
 
   onUpdatePassword() {
     alert("Attempting to Change Password");
-    this.cognitoUser.completeNewPasswordChallenge(this.newPassword, {preferred_username: 'TestUser'}, {
+    this.cognitoUser.completeNewPasswordChallenge(this.newPassword, {preferred_username: this.loginForm.controls['username'].value}, {
       onSuccess: function (result){
         console.log('In the onSuccess.');
       },
@@ -82,11 +96,16 @@ export class LoginComponent {
   }
 
   login(cognitoUser, authenticationDetails): void {
+    this.message = 'Trying to login...';
+    var router = this.router;
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
         var accessToken = result.getAccessToken().getJwtToken();
         console.log(accessToken);
+        console.log("Logged in")
+        //let redirect = this.authService.redirectUrl ? '/admin' : '/login';
         //alert("Succesfull Login!!");
+        router.navigate(['/admin']);
       },
 
       onFailure: function (err) {
