@@ -2,7 +2,7 @@
     margin-left: 0.5%;
     margin-right: 0.5%;
 }
-form {
+#container {
     left: 50%;
     top: 50%;
     position: absolute;
@@ -11,7 +11,7 @@ form {
     transform: translate3d(-50%, -50%, 0);
 }
 
-button {
+#parent button {
     right: 17.5%;
     float: right;
 }

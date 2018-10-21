@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router }      from '@angular/router';
 import { AuthService } from '../../admin/auth.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,18 +18,21 @@ import { AuthService } from '../../admin/auth.service';
   ]
 }) */
 
-export class LoginComponent implements OnInit{
+export class LoginComponent {
   message: string;
 
-  public authService: AuthService;
-  public router: Router;
-  ngOnInit(){
+  constructor(public authService: AuthService, public router: Router){
     this.setMessage();
   }
+  //public authService: AuthService;
+  
+  /* ngOnInit(){
+    this.setMessage();
+  } */
 
   setMessage() {
     this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-  }
+  } 
 
   loginForm = new FormGroup({
     username: new FormControl(),
@@ -43,7 +47,7 @@ export class LoginComponent implements OnInit{
 
   //username: string;
   //password: string;
-  newPassword: string;
+  //newPassword: string;
   title = 'Project Management System';
   poolData = {
     UserPoolId: 'eu-west-2_3zeUtzVmY', // your user pool id here
@@ -76,9 +80,9 @@ export class LoginComponent implements OnInit{
 
   onUpdatePassword() {
     alert("Attempting to Change Password");
-    this.cognitoUser.completeNewPasswordChallenge(this.newPassword, {preferred_username: this.loginForm.controls['username'].value}, {
+    this.cognitoUser.completeNewPasswordChallenge(this.updatePasswordForm.controls['newPassword'].value, {preferred_username: this.loginForm.controls['username'].value}, {
       onSuccess: function (result){
-        console.log('In the onSuccess.');
+        console.log('Successfully changed password');
       },
       authSuccess: function (result){
         //Password has been updated.
@@ -97,7 +101,7 @@ export class LoginComponent implements OnInit{
 
   login(cognitoUser, authenticationDetails): void {
     this.message = 'Trying to login...';
-    var router = this.router;
+    let route = '';
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
         var accessToken = result.getAccessToken().getJwtToken();
@@ -105,11 +109,13 @@ export class LoginComponent implements OnInit{
         console.log("Logged in")
         //let redirect = this.authService.redirectUrl ? '/admin' : '/login';
         //alert("Succesfull Login!!");
-        router.navigate(['/admin']);
+        route = '../admin';
+        console.log("After navigate");
       },
 
       onFailure: function (err) {
-        console.log(err);
+        console.log(new Error().stack);
+        route = '../error';
         //alert(err);
       },
 
@@ -123,6 +129,11 @@ export class LoginComponent implements OnInit{
         //alert("New Password Required");
       }
     });
+    this.redirect(route);
+  }
+
+  redirect(path: string) {
+    this.router.navigate([path]);
   }
 
 }
