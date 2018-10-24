@@ -20,9 +20,12 @@ import { AuthService } from '../../admin/auth.service';
 
 export class LoginComponent {
   message: string;
+  route: string;
+  rrouter: Router;
 
   constructor(public authService: AuthService, public router: Router){
     this.setMessage();
+    this.rrouter = router;
   }
   //public authService: AuthService;
   
@@ -76,6 +79,7 @@ export class LoginComponent {
     console.log(this.authenticationDetails);
     this.login(this.cognitoUser, this.authenticationDetails);
     console.log("executed login");
+    //nthis.redirect(this.route);
   }
 
   onUpdatePassword() {
@@ -101,21 +105,23 @@ export class LoginComponent {
 
   login(cognitoUser, authenticationDetails): void {
     this.message = 'Trying to login...';
-    let route = '';
+    let that = this;
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
         var accessToken = result.getAccessToken().getJwtToken();
         console.log(accessToken);
-        console.log("Logged in")
+        console.log("Logged in");
+        localStorage.setItem('token', accessToken);
         //let redirect = this.authService.redirectUrl ? '/admin' : '/login';
         //alert("Succesfull Login!!");
-        route = '../admin';
+        that.route = '../admin';
         console.log("After navigate");
+        that.redirect(that.route);
       },
 
       onFailure: function (err) {
         console.log(new Error().stack);
-        route = '../error';
+        that.route = '../error';
         //alert(err);
       },
 
@@ -129,10 +135,10 @@ export class LoginComponent {
         //alert("New Password Required");
       }
     });
-    this.redirect(route);
   }
 
   redirect(path: string) {
+    //console.log(this.router.navigate([path]));
     this.router.navigate([path]);
   }
 

@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from '../auth/auth.guard';
+
+import { RoleGuardService as RoleGuard } from '../auth/role-guard.service';
 
 const routes: Routes = [
   {
-    path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
+    path: 'admin', component: AdminComponent, canActivate: [RoleGuard],
+    data: { expectedRole: 'Administrator'}
   }
 ];
 
