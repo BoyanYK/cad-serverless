@@ -10,6 +10,36 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  profiles: Object[];
+
+  constructor() {
+    this.profiles = [
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      },
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      },
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      },
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      }
+    ]
+  }
 
   //TODO uncomment once layout is done
   //constructor(private roleGuardService: RoleGuardService) { }

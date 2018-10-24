@@ -19,6 +19,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { RoleGuardService } from './auth/role-guard.service';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import {MatCardModule} from '@angular/material/card';
 
 
 export function tokenGetter() {
@@ -45,6 +46,7 @@ export function tokenGetter() {
     MatIconModule,
     MatTabsModule,
     FlexLayoutModule,
+    MatCardModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

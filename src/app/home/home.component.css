@@ -2,7 +2,7 @@
     display: grid;
     grid-template-areas: 
         "header header header"
-        "content content content"
+        "nav content side"
         "footer footer footer";
     
         grid-template-columns: 200px 1fr 200px;
@@ -18,51 +18,42 @@ header {
     display: flex;
     justify-content: space-between;    
 }
-/* 
-header.navbar {
-    align-items: left;
+
+main {
+    display: flex;
+    justify-content: space-between;  
+    /* align-items: center; */
 }
-
-header.right {
-    align-items: right;
-} */
-
-.example-icon {
-    padding: 0 14px;
-  }
-  
 .example-spacer {
     flex: 1 1 auto;
 }
-  
 
-/* header.left-side {
-    align-items: left;
-}
-.navbar li {
-    list-style: none;
-    text-align: center;
-    margin-right: 30px;
-    line-height: 50px;
-    display: inline;
+mat-card {
+    margin:1em;
+    width: 300px;
+    padding-top:0;
+    padding-left:0;
+    padding-right:0
 }
 
-.navbar li a {
-    text-decoration: none;
-    color: #000000;
-    display: block;
-  }
-  
-.navbar li a:hover {
-    text-decoration: none;
-    color: #000000;
-    background-color: #33B5E5;
-  }
+mat-card-header {
+    background:rgba(0,0,0,.06);
+    padding:10px 10px;
+    padding-bottom: -10px;
+}
 
-header.left-side {
-    align-items: right;
-} */
+mat-card-content {
+    padding: 1em;
+}
 
+.header-image {
+    background-image: url('../../assets/profile_placeholder.png');
+    background-size: cover;
+}
+
+mat-card-title {
+    font-size: 25px!important;
+}
 main {
     grid-area: content;
 }
