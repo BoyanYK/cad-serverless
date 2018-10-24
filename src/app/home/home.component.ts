@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RoleGuardService } from '../auth/role-guard.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private roleGuardService: RoleGuardService) { }
 
-  ngOnInit() {
+  userType: string = '';
+
+  ngOnInit(){
+    this.roleGuardService.userType.subscribe(value => this.userType = value);
   }
 
 }

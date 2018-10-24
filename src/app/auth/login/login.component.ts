@@ -114,7 +114,7 @@ export class LoginComponent {
         localStorage.setItem('token', accessToken);
         //let redirect = this.authService.redirectUrl ? '/admin' : '/login';
         //alert("Succesfull Login!!");
-        that.route = '../admin';
+        that.route = '../home';
         console.log("After navigate");
         that.redirect(that.route);
       },

@@ -1,7 +1,7 @@
 <p>
   home works! Logged In!
 </p>
-<nav>
+<nav *ngIf="userType === 'Administrator'">
   <a routerLink="../admin" routerLinkActive="active">Admin_page</a>
 </nav>
 <router-outlet></router-outlet>
