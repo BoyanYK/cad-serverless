@@ -7,9 +7,9 @@ import { AuthGuard } from './auth/auth.guard';
 
 const appRoutes: Routes = [
   // TODO Change below line to LoginComponent!!!
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent/* , canActivate: [AuthGuard]  */} //TODO uncomment after layout is done
+  { path: 'home', component: HomeComponent , canActivate: [AuthGuard]} //TODO uncomment after layout is done
 ]
 
 @NgModule({

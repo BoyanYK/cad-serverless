@@ -1,29 +1,30 @@
 <!-- //<div class="flexbox-parent"> -->
-<div id="container">
-  <div *ngIf="!authService.isLoggedIn" id="parent">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form_login">
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Username" formControlName="username">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Password" formControlName="password">
-      </mat-form-field>
-      <button mat-flat-button id="Submit">Submit</button>
-    </form>
-  </div>
-<br>
-<br>
-  <!-- //</div> -->
+<mat-grid-list cols="3">
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+    <div id="container">
+      <div *ngIf="!authService.isLoggedIn" id="parent">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form_login">
+          <mat-form-field class="input-field">
+            <input matInput placeholder="Username" formControlName="username">
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <input matInput placeholder="Password" formControlName="password">
+          </mat-form-field>
+          <button mat-flat-button id="Submit">Submit</button>
+        </form>
+      </div>
+      <br>
+      <br>
+      <!-- //</div> -->
 
-  <form [formGroup]="updatePasswordForm">
-    <mat-form-field class="input-field">
-      <input matInput placeholder="New Password" formControlName="newPassword">
-    </mat-form-field>
-    <button mat-flat-button (click)="onUpdatePassword()">Update Password</button>
-  </form>
-</div>
-<br>
-<br>
-<button mat-flat-button (click)="onLogout()">Logout</button>
-<router-outlet></router-outlet>
-<!-- -->
+      <form [formGroup]="updatePasswordForm">
+        <mat-form-field class="input-field">
+          <input matInput placeholder="New Password" formControlName="newPassword">
+        </mat-form-field>
+        <button mat-flat-button (click)="onUpdatePassword()">Update Password</button>
+      </form>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile></mat-grid-tile>
+</mat-grid-list>

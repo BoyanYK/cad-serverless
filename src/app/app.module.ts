@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatGridListModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { LoginComponent } from './auth/login/login.component';
@@ -45,6 +45,7 @@ export function tokenGetter() {
     MatToolbarModule,
     MatIconModule,
     MatTabsModule,
+    MatGridListModule,
     FlexLayoutModule,
     MatCardModule,
     JwtModule.forRoot({

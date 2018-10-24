@@ -144,3 +144,4 @@
 * [Notifications](https://github.com/jacob-meacham/angular-notification-icons)
 * [Login routing] (https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3)
 * [Toolbar] (https://theinfogrid.com/tech/developers/angular/responsive-navbar-angular-flex-layout/)
+* [Colour palette] (https://www.materialpalette.com/)

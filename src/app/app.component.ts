@@ -7,6 +7,7 @@ import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cogn
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  //TODO refactor entire class, only cognito user is necessary
   username: string;
   password: string;
   newPassword: string;
