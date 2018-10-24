@@ -5,7 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatButtonModule, MatInputModule} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { LoginComponent } from './auth/login/login.component';
@@ -15,6 +18,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './auth/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { RoleGuardService } from './auth/role-guard.service';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 
 export function tokenGetter() {
@@ -37,6 +41,10 @@ export function tokenGetter() {
     ReactiveFormsModule,
     AdminModule,
     AuthModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatTabsModule,
+    FlexLayoutModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleGuardService } from '../auth/role-guard.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
+//TODO uncomment once layout is done
+//import { RoleGuardService } from '../auth/role-guard.service';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +11,14 @@ import { RoleGuardService } from '../auth/role-guard.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private roleGuardService: RoleGuardService) { }
+  //TODO uncomment once layout is done
+  //constructor(private roleGuardService: RoleGuardService) { }
 
   userType: string = '';
 
   ngOnInit(){
-    this.roleGuardService.userType.subscribe(value => this.userType = value);
+    //TODO uncomment once layout is done
+    //this.roleGuardService.userType.subscribe(value => this.userType = value);
   }
 
 }
