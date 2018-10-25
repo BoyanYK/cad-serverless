@@ -36,6 +36,30 @@ export class HomeComponent implements OnInit {
         name: "This User",
         email: "example@mail.com",
         skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      },
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      },
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      },
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+      },
+      {
+        name: "This User",
+        email: "example@mail.com",
+        skills: ["This", "That", "Then", "There"],
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
       }
     ]
