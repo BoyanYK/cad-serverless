@@ -3,6 +3,7 @@ import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cogn
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router }      from '@angular/router';
 import { AuthService } from '../../admin/auth.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class LoginComponent {
   route: string;
   rrouter: Router;
 
-  constructor(public authService: AuthService, public router: Router){
+  constructor(public authService: AuthService, public router: Router, public http: HttpClient){
     this.setMessage();
     this.rrouter = router;
   }
@@ -67,6 +68,32 @@ export class LoginComponent {
   };
   cognitoUser;
   authenticationDetails;
+
+  //TODO get this out of here
+  testApi() {
+    var params = new HttpParams({fromString: 'tableName=UserProfiles'});
+    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/getusers", {params});
+    response.subscribe((data) => {
+      data.forEach(element => {
+        console.log(element);
+      });
+    });
+
+    /* const req = this.http.post('http://jsonplaceholder.typicode.com/posts', {
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    })
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log("Error occured");
+        }
+      ); */
+  }
+  //TODO get above out of here
 
   onSubmit() {
     alert("Attempting to login");

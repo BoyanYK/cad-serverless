@@ -30,6 +30,7 @@ main {
 
 mat-card {
     /* margin:3%; */
+    min-width: 270px;
     width: 300px;
     /* max-height: 450px; */
     padding-top:0;

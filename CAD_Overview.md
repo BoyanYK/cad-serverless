@@ -106,12 +106,12 @@
           "User_ID": 100,
           "First_Name": "First",
           "Last_Name": "Last",
-          "Email": "email@email.com"
+          "Email": "email@email.com",
           "Description": "Some Description",
           "Role": "Role",
           "Notifications": [{
                   "Date": "Date",
-                  "Message": "Message"
+                  "Message": "Message",
                   "Link": "Link_To_Page"
               },
               {
@@ -146,3 +146,4 @@
 * [Toolbar](https://theinfogrid.com/tech/developers/angular/responsive-navbar-angular-flex-layout/)
 * [Colour palette](https://www.materialpalette.com/)
 * [FlexLayout](https://blog.angularindepth.com/angular-flex-layout-flexbox-and-grid-layout-for-angular-component-6e7c24457b63)
+* [Dynamo + Lambda Streams](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb-example.html)
