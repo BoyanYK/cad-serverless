@@ -1,9 +1,10 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Router }      from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../admin/auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { RoleGuardService } from '../role-guard.service';
 
 
 @Component({
@@ -24,26 +25,26 @@ export class LoginComponent {
   route: string;
   rrouter: Router;
 
-  constructor(public authService: AuthService, public router: Router, public http: HttpClient){
+  constructor(public authService: AuthService, public router: Router, public http: HttpClient, public roleGuard: RoleGuardService) {
     this.setMessage();
     this.rrouter = router;
   }
   //public authService: AuthService;
-  
+
   /* ngOnInit(){
     this.setMessage();
   } */
 
   setMessage() {
     this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-  } 
+  }
 
   loginForm = new FormGroup({
     username: new FormControl(),
     password: new FormControl()
   });
-  
-  
+
+
 
   updatePasswordForm = new FormGroup({
     newPassword: new FormControl('')
@@ -71,15 +72,15 @@ export class LoginComponent {
 
   //TODO get this out of here
   testApi() {
-    var params = new HttpParams({fromString: 'tableName=UserProfiles'});
-    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/getusers", {params});
+    var params = new HttpParams({ fromString: 'tableName=UserProfiles' });
+    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/getusers", { params });
     response.subscribe((data) => {
       data.forEach(element => {
         console.log(element);
       });
     });
 
-    /* const req = this.http.post('http://jsonplaceholder.typicode.com/posts', {
+    /* const req = this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Create_User', {
       title: 'foo',
       body: 'bar',
       userId: 1
@@ -98,9 +99,9 @@ export class LoginComponent {
   onSubmit() {
     alert("Attempting to login");
     this.authenticationData.Username = this.loginForm.controls['username'].value,
-    this.userData.Username = this.loginForm.controls['username'].value,
-    this.authenticationData.Password = this.loginForm.controls['password'].value,
-    this.authenticationDetails = new AuthenticationDetails(this.authenticationData);
+      this.userData.Username = this.loginForm.controls['username'].value,
+      this.authenticationData.Password = this.loginForm.controls['password'].value,
+      this.authenticationDetails = new AuthenticationDetails(this.authenticationData);
     this.cognitoUser = new CognitoUser(this.userData);
     console.log(this.cognitoUser);
     console.log(this.authenticationDetails);
@@ -111,15 +112,15 @@ export class LoginComponent {
 
   onUpdatePassword() {
     alert("Attempting to Change Password");
-    this.cognitoUser.completeNewPasswordChallenge(this.updatePasswordForm.controls['newPassword'].value, {preferred_username: this.loginForm.controls['username'].value}, {
-      onSuccess: function (result){
+    this.cognitoUser.completeNewPasswordChallenge(this.updatePasswordForm.controls['newPassword'].value, { preferred_username: this.loginForm.controls['username'].value }, {
+      onSuccess: function (result) {
         console.log('Successfully changed password');
       },
-      authSuccess: function (result){
+      authSuccess: function (result) {
         //Password has been updated.
         console.log('In the AuthSuccess.');
       },
-      onFailure: function(err) {
+      onFailure: function (err) {
         console.log(err);
       }
     });
@@ -166,6 +167,7 @@ export class LoginComponent {
 
   redirect(path: string) {
     //console.log(this.router.navigate([path]));
+    this.roleGuard.updateUserType();
     this.router.navigate([path]);
   }
 

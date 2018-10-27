@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/getusers", {params});
     response.subscribe((data) => {
       data.forEach(element => {
-        console.log(element.email);
         this.profiles.push({
           name: element.first_name + " " + element.last_name,
           email: element.email,

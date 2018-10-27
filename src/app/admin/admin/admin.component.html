@@ -1,7 +1,39 @@
-<h3>ADMIN</h3>
-<h3>ADMIN</h3>
-<h3>ADMIN</h3>
-<h3>ADMIN</h3>
-<h3>ADMIN</h3>
-<h3>ADMIN</h3>
-<h3>ADMIN</h3>
+<div class="container">
+  <header>
+  </header>
+
+  <nav>
+
+  </nav>
+
+  <main class="mat-typography">
+    <!-- Main content -->
+    <div id="createUser">
+      <form formGroupName="createUserForm" (ngSubmit)="createNewUser()" id="form_createUser">
+        <h2 style="margin-right: 5px">Create New User</h2>
+        <mat-form-field class="input-field">
+          <input matInput placeholder="First Name" formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field class="input-field">
+          <input matInput placeholder="Last Name" formControlName="lastName">
+        </mat-form-field>
+        <mat-form-field class="input-field">
+          <input matInput placeholder="Username" formControlName="username">
+        </mat-form-field>
+        <mat-form-field class="input-field">
+          <input matInput placeholder="Password" formControlName="password">
+        </mat-form-field>
+        <mat-form-field class="input-field">
+          <input matInput placeholder="User Role" formControlName="role">
+        </mat-form-field>
+        <button mat-flat-button id="Submit" color="primary">Submit</button>
+      </form>
+    </div>
+  </main>
+
+  <aside></aside>
+
+  <footer>
+    <!-- Footer content -->
+  </footer>
+</div>

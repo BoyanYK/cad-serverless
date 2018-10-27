@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
+import { RoleGuardService } from './auth/role-guard.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,22 @@ import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cogn
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private roleGuardService: RoleGuardService){}
+
+  userType: string = '';
+
+  ngOnInit(){
+    //TODO uncomment once layout is done
+    this.roleGuardService.userType.subscribe(value => this.userType = value);
+  }
+
+  onLogout() {
+    console.log("Logging out");
+    localStorage.clear();
+    this.roleGuardService.updateUserType();
+    //this.cognitoUser.signOut();
+  }
+/* 
   //TODO refactor entire class, only cognito user is necessary
   username: string;
   password: string;
@@ -58,10 +75,7 @@ export class AppComponent {
     });
   }
 
-  onLogout() {
-    alert("Logging out");
-    this.cognitoUser.signOut();
-  }
+  
 
   login(cognitoUser, authenticationDetails): void {
     cognitoUser.authenticateUser(authenticationDetails, {
@@ -86,5 +100,5 @@ export class AppComponent {
         //alert("New Password Required");
       }
     });
-  }
+  } */
 }

@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar *ngIf="userType != ''" color="primary">
 
   <a [routerLink]="['../home']" mat-button>
     <mat-icon aria-label="Example icon-button with a heart icon">home</mat-icon>
@@ -12,10 +12,10 @@
   <span class="example-spacer"></span>
   <a [routerLink]="['../notifications']" mat-button>Notifications</a>
 
-  <a *ngIf="userType === 'Administrator'" [routerLink]="['../projects']" mat-button>Admin Page</a>
+  <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" mat-button>Admin Page</a>
 
   <!-- <a [routerLink]="['../logout']" mat-button>Logout</a> -->
-  <button mat-button (click)="onLogout()">Logout</button>
+  <button [routerLink]="['../']" mat-button (click)="onLogout()">Logout</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
