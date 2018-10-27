@@ -73,9 +73,9 @@ mat-card-content {
     padding-right: 10px;
 }
 
-mat-card-title {
+/* mat-card-title {
     font-size: 25px!important;
-}
+} */
 main {
     grid-area: content;
 }

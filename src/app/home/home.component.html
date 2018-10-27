@@ -52,7 +52,7 @@
 
   </nav>
 
-  <main>
+  <main class="mat-typography">
     <!-- Main content -->
     <div class="cards" fxLayout="wrap row" fxLayout.lt-sm="column" fxLayoutGap="grid" fxLayoutAlign="center start">
       <ng-container *ngFor="let profile of profiles;">
@@ -60,7 +60,7 @@
           <mat-card-header>
             <!-- TODO fix below avatar div positioning only!!! -->
             <div mat-card-avatar class="header-image"></div>
-            <mat-card-title>{{profile.name}}</mat-card-title>
+            <mat-card-title >{{profile.name}}</mat-card-title>
             <mat-card-subtitle><a href="mailto:a@a.com">{{profile.email}}</a></mat-card-subtitle>
           </mat-card-header>
 

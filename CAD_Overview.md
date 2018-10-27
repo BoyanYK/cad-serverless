@@ -99,6 +99,9 @@
         * All developers on the project have their notification list in the database updated 
         _Steps 2,3 and 4 require communication to the database through AWS Lambda_
 
+-   **Project Board (Optional)**
+    * Have a Kanban board for each project that reads/writes to the database on save
+
 * **Tables structure**
     * Users Table
     ```js
