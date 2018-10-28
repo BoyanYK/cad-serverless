@@ -3,12 +3,23 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
+
+export interface Role {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
+
+
 export class AdminComponent implements OnInit {
+
+  roles: Role[];
 
   createUserForm = new FormGroup({
     firstName: new FormControl(),
@@ -18,7 +29,14 @@ export class AdminComponent implements OnInit {
     role: new FormControl(),
   });
 
-  constructor(public http: HttpClient, public snackBar: MatSnackBar) { }
+  constructor(public http: HttpClient, public snackBar: MatSnackBar) {
+    this.roles = [
+      { value: 'Administrator', viewValue: "Administrator" },
+      { value: 'HR', viewValue: "Human Resorces" },
+      { value: 'Senior_Developer', viewValue: "Senior Developer" },
+      { value: 'Developer', viewValue: "Developer" }
+    ];
+  }
 
   ngOnInit() {
   }

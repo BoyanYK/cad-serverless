@@ -23,10 +23,13 @@
         <mat-form-field class="input-field">
           <input matInput required placeholder="Password" formControlName="password">
         </mat-form-field>
-        <mat-form-field class="input-field">
-          <input matInput required placeholder="User Role" formControlName="role">
+        <mat-form-field>
+          <mat-select required placeholder="User Role" class="input-field">
+            <mat-option *ngFor="let role of roles" [value]="role.value">{{role.viewValue}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <button mat-flat-button (click)="createNewUser()" type="button" color="primary">Submit</button>
+
       </form>
     </div>
   </main>
