@@ -23,11 +23,9 @@ import { RoleGuardService } from '../role-guard.service';
 export class LoginComponent {
   message: string;
   route: string;
-  rrouter: Router;
 
   constructor(public authService: AuthService, public router: Router, public http: HttpClient, public roleGuard: RoleGuardService) {
     this.setMessage();
-    this.rrouter = router;
   }
   //public authService: AuthService;
 

@@ -9,24 +9,24 @@
   <main class="mat-typography">
     <!-- Main content -->
     <div id="createUser">
-      <form formGroupName="createUserForm" (ngSubmit)="createNewUser()" id="form_createUser">
+      <form [formGroup]="createUserForm" id="form_createUser">
         <h2 style="margin-right: 5px">Create New User</h2>
         <mat-form-field class="input-field">
-          <input matInput placeholder="First Name" formControlName="firstName">
+          <input matInput required placeholder="First Name" formControlName="firstName">
         </mat-form-field>
         <mat-form-field class="input-field">
-          <input matInput placeholder="Last Name" formControlName="lastName">
+          <input matInput required placeholder="Last Name" formControlName="lastName">
         </mat-form-field>
         <mat-form-field class="input-field">
-          <input matInput placeholder="Username" formControlName="username">
+          <input matInput required placeholder="Username" formControlName="username">
         </mat-form-field>
         <mat-form-field class="input-field">
-          <input matInput placeholder="Password" formControlName="password">
+          <input matInput required placeholder="Password" formControlName="password">
         </mat-form-field>
         <mat-form-field class="input-field">
-          <input matInput placeholder="User Role" formControlName="role">
+          <input matInput required placeholder="User Role" formControlName="role">
         </mat-form-field>
-        <button mat-flat-button id="Submit" color="primary">Submit</button>
+        <button mat-flat-button (click)="createNewUser()" type="button" color="primary">Submit</button>
       </form>
     </div>
   </main>

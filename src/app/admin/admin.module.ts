@@ -6,7 +6,8 @@ import { AdminComponent } from './admin/admin.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule, MatInputModule, MatGridListModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatGridListModule, MatCardModule, MatSnackBarModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -18,7 +19,9 @@ import { MatButtonModule, MatInputModule, MatGridListModule, MatCardModule } fro
     MatButtonModule,
     MatInputModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   declarations: [
     AdminComponent,
