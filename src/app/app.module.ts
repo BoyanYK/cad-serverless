@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RoleGuardService } from './auth/role-guard.service';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {MatCardModule} from '@angular/material/card';
+import { UserComponent } from './user/user.component';
 
 
 export function tokenGetter() {
@@ -30,7 +31,8 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
