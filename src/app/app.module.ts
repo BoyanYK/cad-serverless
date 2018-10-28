@@ -21,6 +21,7 @@ import { RoleGuardService } from './auth/role-guard.service';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {MatCardModule} from '@angular/material/card';
 import { UserComponent } from './user/user.component';
+import { ProfilesComponent } from './profiles/profiles.component';
 
 
 export function tokenGetter() {
@@ -32,7 +33,8 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    ProfilesComponent
   ],
   imports: [
     BrowserModule,

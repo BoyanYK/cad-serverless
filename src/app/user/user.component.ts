@@ -13,13 +13,13 @@ export class UserComponent implements OnInit {
   newItem = {
     TableName: "UserProfiles",
     Item: {
-      "username": "SampleuserProfileFromFrontend",
-      "first_name": "Test",
-      "last_name": "User",
+      "username": "DifferentPerson",
+      "first_name": "Different",
+      "last_name": "Person",
       "email": "example@email.com",
-      "description": "Some Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget",
+      "description": "Some Lorem ipsumd asd sad as das da dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget",
       "role": "Administrator",
-      "skills": ["This", "That", "Then", "There"],
+      "skills": ["This", "That", "Then", "There", "Java", "Haskell"],
       "Notifications": [{
         "Date": "Date",
         "Message": "Message",
