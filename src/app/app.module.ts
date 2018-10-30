@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule, MatInputModule, MatGridListModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatGridListModule, MatChipsModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { LoginComponent } from './auth/login/login.component';
@@ -19,7 +19,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { RoleGuardService } from './auth/role-guard.service';
 import { FlexLayoutModule } from "@angular/flex-layout";
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { UserComponent } from './user/user.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 
@@ -52,6 +52,7 @@ export function tokenGetter() {
     MatGridListModule,
     FlexLayoutModule,
     MatCardModule,
+    MatChipsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

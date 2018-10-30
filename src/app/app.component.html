@@ -1,7 +1,7 @@
-<mat-toolbar *ngIf="userType != ''" color="primary">
+<mat-toolbar *ngIf="userType != '' && path != '/login'" color="primary">
 
   <a [routerLink]="['../home']" mat-button>
-    <mat-icon aria-label="Example icon-button with a heart icon">home</mat-icon>
+    <mat-icon>home</mat-icon>
   </a>
   <a [routerLink]="['../user']" mat-button>User</a>
 

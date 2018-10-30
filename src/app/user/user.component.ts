@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
+import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 
 @Component({
@@ -9,6 +11,17 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+
+  profile = {
+    firstName: 'Boyan',
+    lastName: 'Kostadinov',
+    username: 'BoyanYK',
+    email: 'example@email.com',
+    role: 'Administrator',
+    skills: [
+      "This", "That", "Then", "There", "Java", "Haskell"
+    ]
+  };
 
   newItem = {
     TableName: "UserProfiles",
@@ -35,6 +48,33 @@ export class UserComponent implements OnInit {
   }
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.profile.skills.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(skill: string): void {
+    const index = this.profile.skills.indexOf(skill);
+
+    if (index >= 0) {
+      this.profile.skills.splice(index, 1);
+    }
+  }
 
   ngOnInit() {
   }
@@ -51,6 +91,10 @@ export class UserComponent implements OnInit {
           this.snackBar.open('Profile update failed', 'Dismiss', { panelClass: ['snackbar-style-fail'] });
         }
       );
+  }
+
+  toggleEdit() {
+    console.log("Toggled");
   }
 
 }

@@ -1,15 +1,63 @@
-<mat-grid-list cols="3">
-  <mat-grid-tile></mat-grid-tile>
-  <mat-grid-tile class="mat-typography">
-    <!-- <h2>Username</h2>
-    <h2>First Name</h2>
-    <h2>Last Name</h2>
-    <h2>Email</h2>
-    <h2>Description</h2>
-    <h2>Role</h2>
-    <h2>Skills</h2> -->
+<div class="container">
+  <header>
+  </header>
 
-    <button mat-flat-button (click)="updateUserProfiles()" color="primary" styles="max-height=30px">TestBodyinLambda</button>
-  </mat-grid-tile>
-  <mat-grid-tile></mat-grid-tile>
-</mat-grid-list>
+  <nav>
+
+  </nav>
+
+  <main class="mat-typography">
+    <div class="cards" fxLayout="row" fxLayout.lt-sm="column">
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title styles="text-align: center !important">My Personal Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h3>First Name: {{profile.firstName}}</h3>
+          <h3>Last Name: {{profile.lastName}}</h3>
+          <h3>Email: {{profile.email}}</h3>
+          <h3>Role: {{profile.role}}</h3>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title styles="text-align: center !important">My Description</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h3>{{profile.description}}</h3>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title styles="text-align: center !important">My Skills</mat-card-title>
+          <div fxFlex></div>
+          <div class="editIcon">
+            <button mat-icon-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-chip-list #roleList class="mat-chip-list">
+              <mat-chip *ngFor="let skill of profile.skills" [removable]="removable" (removed)="remove(skill)">
+                {{skill}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input matInput placeholder="New skill..." [matChipInputFor]="roleList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </main>
+
+  <aside></aside>
+
+  <footer>
+    <!-- Footer content -->
+  </footer>
+</div>
