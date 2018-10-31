@@ -22,7 +22,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatCardModule } from '@angular/material/card';
 import { UserComponent } from './user/user.component';
 import { ProfilesComponent } from './profiles/profiles.component';
-
+import { NgMasonryGridModule } from 'ng-masonry-grid';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -53,6 +53,7 @@ export function tokenGetter() {
     FlexLayoutModule,
     MatCardModule,
     MatChipsModule,
+    NgMasonryGridModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

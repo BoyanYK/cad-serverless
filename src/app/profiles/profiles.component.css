@@ -19,12 +19,12 @@ header {
   justify-content: space-between;
 }
 
-main {
+/* main {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
+  align-items: center;
 }
-
+ */
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -32,7 +32,7 @@ main {
 mat-card {
   /* margin:3%; */
   min-width: 270px;
-  width: 300px;
+  width: 320px;
   /* max-height: 450px; */
   padding-top: 0;
   padding-left: 0;

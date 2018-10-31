@@ -12,6 +12,8 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 })
 export class UserComponent implements OnInit {
 
+  public isEditable: boolean = false;
+
   profile = {
     firstName: 'Boyan',
     lastName: 'Kostadinov',
@@ -48,6 +50,7 @@ export class UserComponent implements OnInit {
   }
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
+
   visible = true;
   selectable = true;
   removable = true;
@@ -59,7 +62,7 @@ export class UserComponent implements OnInit {
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.profile.skills.push(value.trim());
+      this.newItem.Item.skills.push(value.trim());
     }
 
     // Reset the input value
@@ -79,12 +82,21 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  toggleEdit(updateSkills: boolean) {
+    if (updateSkills) {
+      //TODO Get new json from chips and call updateUserProfiles
+      this.updateUserProfiles();
+    }
+    this.isEditable = !this.isEditable;
+  }
+
   updateUserProfiles() {
-    const req = this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', this.newItem)
+    this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', this.newItem)
       .subscribe(
         res => {
           console.log(res);
-          this.snackBar.open('Profile update successfully', 'Dismiss', { panelClass: ['snackbar-style-success'] });
+          this.snackBar.open('Profile updated successfully', 'Dismiss', { panelClass: ['snackbar-style-success'] });
         },
         err => {
           console.log("Error occured", err);
@@ -92,9 +104,4 @@ export class UserComponent implements OnInit {
         }
       );
   }
-
-  toggleEdit() {
-    console.log("Toggled");
-  }
-
 }

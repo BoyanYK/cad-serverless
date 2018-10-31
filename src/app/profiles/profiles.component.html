@@ -8,44 +8,6 @@
 
 <div class="container">
   <header>
-    <!-- Header content -->
-
-    <!-- <div class="left-side"> -->
-
-    <!-- <mat-tab-group class="navbar">
-              <ng-template mat-tab-label>
-                  <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                  First
-                </ng-template>
-                Content 1
-              <mat-tab label="TabHeader1"></mat-tab>
-              <mat-tab label="TabTabHeader2"></mat-tab>
-              <mat-tab class="right" label="TabHeader3"></mat-tab>
-              <mat-tab class="right" label="TabTabHeader4"></mat-tab>
-          </mat-tab-group> -->
-
-    <!-- <mat-toolbar-row>
-              <mat-icon class="example-tab-icon">home</mat-icon>
-              <span class="example-spacer"></span>
-              <mat-icon class="example-icon">favorite</mat-icon>
-              <mat-icon class="example-icon">delete</mat-icon>
-          </mat-toolbar-row> -->
-    <!-- <app-navigation></app-navigation> -->
-    <!-- <ul class="navbar" routerLinkActive="active">
-          <li class="nav-item"><a [routerLink]="['../user_profile']">User Profile</a></li>
-          <li class="nav-item"><a [routerLink]="['../projects']">Projects</a></li>
-        </ul> -->
-    <!-- </div> -->
-    <!-- <div class="right-side">
-          <mat-tab-group>
-              <mat-tab label="TabHeader1"></mat-tab>
-              <mat-tab label="TabTabHeader2"></mat-tab>
-          </mat-tab-group>
-        <ul class="navbar" routerLinkActive="active">
-          <li class="nav-item"><a [routerLink]="['../notifications']">Notifications</a></li>
-          <li class="nav-item"><a [routerLink]="['../projects']">Admin Page</a></li>
-        </ul> 
-      </div> -->
   </header>
 
   <nav>
@@ -53,12 +15,10 @@
   </nav>
 
   <main class="mat-typography">
-    <!-- Main content -->
-    <div class="cards" fxLayout="wrap row" fxLayout.lt-sm="column" fxLayoutGap="grid" fxLayoutAlign="center start">
-      <ng-container *ngFor="let profile of profiles;">
-        <mat-card class="card" fxFlex="0 0 calc(25% - 15px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+    <ng-masonry-grid>
+      <ng-masonry-grid-item *ngFor="let profile of profiles">
+        <mat-card class="card">
           <mat-card-header>
-            <!-- TODO fix below avatar div positioning only!!! -->
             <div mat-card-avatar class="header-image"></div>
             <mat-card-title>{{profile.name}}</mat-card-title>
             <mat-card-subtitle><a href="mailto:a@a.com">{{profile.email}}</a></mat-card-subtitle>
@@ -72,26 +32,8 @@
             <p class="content-text">{{profile.description}}</p>
           </mat-card-content>
         </mat-card>
-      </ng-container>
-
-
-    </div>
-    <!-- <mat-card>
-        <mat-card-header>
-          <div mat-card-avatar class="header-image"></div>
-          <mat-card-title>Sample Name</mat-card-title>
-          <mat-card-subtitle><a href="mailto:mail@example.com">mail@example.com</a></mat-card-subtitle>
-        </mat-card-header>
-  
-        <mat-card-content>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget tristique lorem. Sed porttitor, ipsum id molestie efficitur, urna justo varius leo, sit amet blandit sapien neque nec leo. Fusce iaculis augue ut luctus iaculis. Duis congue mi vel orci ultrices, eget ultricies dui tristique. Cras eget est nunc. Aliquam interdum in ex sit amet consectetur. Ut lacinia tellus et eleifend cursus.
-                <br>
-                Morbi nec metus eget erat ullamcorper euismod non tincidunt nibh. Sed feugiat condimentum ligula, ut lacinia odio porta in. Ut sodales pretium orci nec venenatis. In placerat consequat urna ac consectetur. Praesent efficitur urna lorem, sit amet malesuada erat varius vel. Vestibulum ac euismod sapien. Praesent ullamcorper leo eu tortor elementum pellentesque. Maecenas consequat libero vitae sapien porta laoreet.
-            </p>
-          </mat-card-content>
-      </mat-card>
-      <p>test</p> -->
+      </ng-masonry-grid-item>
+    </ng-masonry-grid>
   </main>
 
   <aside></aside>

@@ -63,7 +63,10 @@ mat-card-content {
   /* padding:10px 10px 10px 10px; */
 }
 
-.horizontal {
-  display: inline;
-  list-style-type: none;
+.chip-list {
+  width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white !important;
 }
