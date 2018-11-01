@@ -67,6 +67,15 @@ mat-card-content {
   width: 100%;
 }
 
-.mat-form-field-appearance-outline .mat-form-field-outline {
-  color: white !important;
+.chipList {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.descCard {
+  display: flex;
+}
+
+.descCard>* {
+  width: 100%;
 }

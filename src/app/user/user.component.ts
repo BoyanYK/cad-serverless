@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import decode from 'jwt-decode';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -16,9 +17,11 @@ export class UserComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
+
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  public isEditable: boolean = false;
+  public isSkillsEditable: boolean = false;
+  public isDescEditable: boolean = false;
 
   profile = {
     TableName: "UserProfiles",
@@ -64,12 +67,18 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
 
-
-  toggleEdit(updateSkills: boolean) {
+  toggleDescEdit(updateSkills: boolean) {
     if (updateSkills) {
       this.updateUserProfiles();
     }
-    this.isEditable = !this.isEditable;
+    this.isDescEditable = !this.isDescEditable;
+  }
+
+  toggleSkillsEdit(updateSkills: boolean) {
+    if (updateSkills) {
+      this.updateUserProfiles();
+    }
+    this.isSkillsEditable = !this.isSkillsEditable;
   }
 
   updateUserProfiles() {
