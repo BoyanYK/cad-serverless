@@ -90,63 +90,66 @@
     5.  AWS Lambda function is triggered to update the projects list in DynamoDB, and to notify the selected developer of their new project to supervise  
             _Steps 2,3 and 4 require communication to the database through AWS Lambda_
 -   **Project update**
+
     1.  Project Manager is logged in
     2.  Goes to Projects board
     3.  Selects my projects, then one that is supervised by them
     4.  Selects edit and changes the status/description/tasks
     5.  Saves changes and a AWS Lambda function is triggered to reflect that
-        * Project information is updated
-        * All developers on the project have their notification list in the database updated 
-        _Steps 2,3 and 4 require communication to the database through AWS Lambda_
+        -   Project information is updated
+        -   All developers on the project have their notification list in the database updated 
+            _Steps 2,3 and 4 require communication to the database through AWS Lambda_
 
 -   **Project Board (Optional)**
-    * Have a Kanban board for each project that reads/writes to the database on save
+    -   Have a Kanban board for each project that reads/writes to the database on save
 
-* **Tables structure**
-    * Users Table
-    ```js
-      {
-          "User_ID": 100,
-          "First_Name": "First",
-          "Last_Name": "Last",
-          "Email": "email@email.com",
-          "Description": "Some Description",
-          "Role": "Role",
-          "Notifications": [{
-                  "Date": "Date",
-                  "Message": "Message",
-                  "Link": "Link_To_Page"
-              },
-              {
-                  "Date": "Date",
-                  "Message": "Message",
-                  "Link": "Link_To_Page"
-              }
-          ]
-      }
-    ```
-    * Projects Table
-    ```js
-    {
-        "Project_ID": 100,
-        "Project_Name": "Name",
-        "Project_Manager": "Senior_Dev_A",
-        "Project_Description": "Some Description",
-        "Team_Size": 3,
-        "Role": "Role",
-        "Developers": [
-            "Developer_A",
-            "Developer_B",
-            "Developer_C"
-        ]
-      }
-    ```
-### 4. Libraries and other resources
-* [AWS Cognito User Creation](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-user-identity-pools-javascript-examples.html)
-* [AWS Cognito User Authentication](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-identity-user-pools-javascript-example-authenticating-admin-created-user.html)
-* [Notifications](https://github.com/jacob-meacham/angular-notification-icons)
-* [Login routing](https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3)
-* [Toolbar](https://theinfogrid.com/tech/developers/angular/responsive-navbar-angular-flex-layout/)
-* [Colour palette](https://www.materialpalette.com/)
-* [FlexLayout](https://blog.angularindepth.com/angular-flex-layout-flexbox-and-grid-layout-for-angular-component-6e7c24457b63)
-* [Dynamo + Lambda Streams](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb-example.html)
+
+-   **Tables structure**
+        \* Users Table
+        ```js
+          {
+              "User_ID": 100,
+              "First_Name": "First",
+              "Last_Name": "Last",
+              "Email": "email@email.com",
+              "Description": "Some Description",
+              "Role": "Role",
+              "Notifications": [{
+                      "Date": "Date",
+                      "Message": "Message",
+                      "Link": "Link_To_Page"
+                  },
+                  {
+                      "Date": "Date",
+                      "Message": "Message",
+                      "Link": "Link_To_Page"
+                  }
+              ]
+          }
+        ```
+        * Projects Table
+        ```js
+        {
+            "Project_ID": 100,
+            "Project_Name": "Name",
+            "Project_Manager": "Senior_Dev_A",
+            "Project_Description": "Some Description",
+            "Team_Size": 3,
+            "Role": "Role",
+            "Developers": [
+                "Developer_A",
+                "Developer_B",
+                "Developer_C"
+            ]
+          }
+        ```
+    ### 4. Libraries and other resources
+-   [AWS Cognito User Creation](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-user-identity-pools-javascript-examples.html)
+-   [AWS Cognito User Authentication](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-identity-user-pools-javascript-example-authenticating-admin-created-user.html)
+-   [Notifications](https://github.com/jacob-meacham/angular-notification-icons)
+-   [Login routing](https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3)
+-   [Toolbar](https://theinfogrid.com/tech/developers/angular/responsive-navbar-angular-flex-layout/)
+-   [Colour palette](https://www.materialpalette.com/)
+-   [FlexLayout](https://blog.angularindepth.com/angular-flex-layout-flexbox-and-grid-layout-for-angular-component-6e7c24457b63)
+-   [Dynamo + Lambda Streams](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb-example.html)
+-   [Profiles Masonry Grid](https://www.npmjs.com/package/ng-masonry-grid)

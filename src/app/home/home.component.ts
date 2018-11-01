@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 //TODO uncomment once layout is done
 import { RoleGuardService } from '../auth/role-guard.service';
 import { HttpParams, HttpClient } from '@angular/common/http';
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   profiles: Object[];
 
   constructor(private roleGuardService: RoleGuardService, private http: HttpClient) {
-    var params = new HttpParams({fromString: 'tableName=UserProfiles'});
+    /* var params = new HttpParams({fromString: 'tableName=UserProfiles'});
     this.profiles = new Array();
     var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/getusers", {params});
     response.subscribe((data) => {
@@ -26,64 +26,64 @@ export class HomeComponent implements OnInit {
           description: element.description
         })
       });
-    });
+    }); */
 
-/* 
-    this.profiles = [
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      },
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      },
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      },
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      },
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      },
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      },
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      },
-      {
-        name: "This User",
-        email: "example@mail.com",
-        skills: ["This", "That", "Then", "There"],
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
-      }
-    ] */
+    /* 
+        this.profiles = [
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          },
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          },
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          },
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          },
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          },
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          },
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          },
+          {
+            name: "This User",
+            email: "example@mail.com",
+            skills: ["This", "That", "Then", "There"],
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget"
+          }
+        ] */
   }
 
   userType: string = '';
 
-  ngOnInit(){
+  ngOnInit() {
     //TODO uncomment once layout is done
     this.roleGuardService.userType.subscribe(value => this.userType = value);
   }

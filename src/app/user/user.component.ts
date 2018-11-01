@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import decode from 'jwt-decode';
 
 
 @Component({
@@ -11,58 +12,39 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
-  public isEditable: boolean = false;
-
-  profile = {
-    firstName: 'Boyan',
-    lastName: 'Kostadinov',
-    username: 'BoyanYK',
-    email: 'example@email.com',
-    role: 'Administrator',
-    skills: [
-      "This", "That", "Then", "There", "Java", "Haskell"
-    ]
-  };
-
-  newItem = {
-    TableName: "UserProfiles",
-    Item: {
-      "username": "DifferentPerson",
-      "first_name": "Different",
-      "last_name": "Person",
-      "email": "example@email.com",
-      "description": "Some Lorem ipsumd asd sad as das da dolor sit amet, consectetur adipiscing elit. Curabitur a gravida massa, eget",
-      "role": "Administrator",
-      "skills": ["This", "That", "Then", "There", "Java", "Haskell"],
-      "Notifications": [{
-        "Date": "Date",
-        "Message": "Message",
-        "Link": "Link_To_Page"
-      },
-      {
-        "Date": "Date",
-        "Message": "Message",
-        "Link": "Link_To_Page"
-      }
-      ]
-    }
-  }
-
-  constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
-
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  public isEditable: boolean = false;
+
+  profile = {
+    TableName: "UserProfiles",
+    Item: {
+      "username": "",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "description": "",
+      "role": "",
+      "skills": [],
+      //"Notifications": []
+    }
+  }
+
+  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
+    this.getProfile();
+
+  }
+
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-
     // Add our fruit
     if ((value || '').trim()) {
-      this.newItem.Item.skills.push(value.trim());
+      this.profile.Item.skills.push(value.trim());
     }
 
     // Reset the input value
@@ -72,10 +54,10 @@ export class UserComponent implements OnInit {
   }
 
   remove(skill: string): void {
-    const index = this.profile.skills.indexOf(skill);
+    const index = this.profile.Item.skills.indexOf(skill);
 
     if (index >= 0) {
-      this.profile.skills.splice(index, 1);
+      this.profile.Item.skills.splice(index, 1);
     }
   }
 
@@ -85,14 +67,13 @@ export class UserComponent implements OnInit {
 
   toggleEdit(updateSkills: boolean) {
     if (updateSkills) {
-      //TODO Get new json from chips and call updateUserProfiles
       this.updateUserProfiles();
     }
     this.isEditable = !this.isEditable;
   }
 
   updateUserProfiles() {
-    this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', this.newItem)
+    this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', this.profile)
       .subscribe(
         res => {
           console.log(res);
@@ -103,5 +84,43 @@ export class UserComponent implements OnInit {
           this.snackBar.open('Profile update failed', 'Dismiss', { panelClass: ['snackbar-style-fail'] });
         }
       );
+  }
+
+  getProfile() {
+    var params = new HttpParams({ fromString: 'queryType=query' });
+    //TODO decoding/token is broken - fix!!!
+    console.log(decode(localStorage.getItem('token'))["username"]);
+    var query = {
+      TableName: "UserProfiles",
+      KeyConditionExpression: "username = :u",
+      ExpressionAttributeValues: {
+        ":u": decode(localStorage.getItem("token"))["username"]
+      }
+    }
+
+    this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params })
+      .subscribe((data) => {
+        this.profile.Item.username = data[0]["username"];
+        this.profile.Item.first_name = data[0]["first_name"];
+        this.profile.Item.last_name = data[0]["last_name"];
+        this.profile.Item.email = data[0]["email"];
+        this.profile.Item.description = data[0]["description"];
+        this.profile.Item.role = data[0]["role"];
+        this.profile.Item.skills = data[0]["skills"];
+      });
+
+    /* var params = new HttpParams({ fromString: 'tableName=UserProfiles' });
+    this.profiles = new Array();
+    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/getusers", { params });
+    response.subscribe((data) => {
+      data.forEach(element => {
+        this.profiles.push({
+          name: element.first_name + " " + element.last_name,
+          email: element.email,
+          skills: element.skills,
+          description: element.description
+        })
+      });
+    }); */
   }
 }
