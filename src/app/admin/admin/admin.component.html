@@ -24,7 +24,7 @@
           <input matInput required placeholder="Password" formControlName="password">
         </mat-form-field>
         <mat-form-field>
-          <mat-select required placeholder="User Role" class="input-field">
+          <mat-select formControlName="role" required placeholder="User Role" class="input-field">
             <mat-option *ngFor="let role of roles" [value]="role.value">{{role.viewValue}}</mat-option>
           </mat-select>
         </mat-form-field>

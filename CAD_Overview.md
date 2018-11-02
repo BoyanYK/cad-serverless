@@ -68,7 +68,8 @@
     1.  Admin is logged in
     2.  Selects create new user
     3.  Fills in First, Last Name, a password and role, submits details
-    4.  AWS Lambda function uses details to create a new user in AWS Cognito pool, as well as a user in AWS DynamoDB  
+    4.  AWS Lambda function uses details to create a new user in AWS Cognito pool
+    5.  After the user has been created in Cognito, the Lambda function publishes to an SNS topic which in turn triggers another Lambda function. That second Lambda function creates the new user item in the users table in Dynamo, filling it with the basic provided data.
             Afterwarwards, the user can log in
 -   **Project Creation**
     1.  HR or Senior Developer is logged in
