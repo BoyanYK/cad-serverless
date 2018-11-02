@@ -11,10 +11,12 @@ import { Location } from '@angular/common';
 })
 export class AppComponent {
   path: string = '';
+  notifications: number;
   constructor(private roleGuardService: RoleGuardService, private router: Router, private location: Location) {
     router.events.subscribe((val) => {
       this.path = this.location.path();
     });
+    this.notifications = null;
   }
 
   userType: string = '';
@@ -29,6 +31,10 @@ export class AppComponent {
     localStorage.clear();
     this.roleGuardService.updateUserType();
     //this.cognitoUser.signOut();
+  }
+
+  incrNots() {
+    this.notifications++;
   }
   /* 
     //TODO refactor entire class, only cognito user is necessary

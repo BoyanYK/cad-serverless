@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule, MatInputModule, MatGridListModule, MatChipsModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatGridListModule, MatChipsModule, MatBadgeModule, MatDialogModule, MatOptionModule, MatSelectModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { LoginComponent } from './auth/login/login.component';
@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 import { UserComponent } from './user/user.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
+import { ProjectsComponent, CreateProjectDialog } from './projects/projects.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -34,7 +35,9 @@ export function tokenGetter() {
     HomeComponent,
     LoginComponent,
     UserComponent,
-    ProfilesComponent
+    ProfilesComponent,
+    ProjectsComponent,
+    CreateProjectDialog
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,10 @@ export function tokenGetter() {
     MatCardModule,
     MatChipsModule,
     NgMasonryGridModule,
+    MatBadgeModule,
+    MatDialogModule,
+    MatOptionModule,
+    MatSelectModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -63,6 +70,7 @@ export function tokenGetter() {
     HttpClientModule
     //LoginComponent
   ],
+  entryComponents: [CreateProjectDialog],
   providers: [AuthGuard, RoleGuardService],
   bootstrap: [AppComponent]
 })

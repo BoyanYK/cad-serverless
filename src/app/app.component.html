@@ -10,7 +10,12 @@
   <a [routerLink]="['../projects']" mat-button>Projects</a>
 
   <span class="example-spacer"></span>
-  <a [routerLink]="['../notifications']" mat-button>Notifications</a>
+  <!-- <a [routerLink]="['../notifications']" mat-button>
+    <mat-icon>notifications</mat-icon>
+  </a> -->
+  <a mat-button (click)="incrNots()">
+    <mat-icon matBadge={{notifications}}>notifications</mat-icon>
+  </a>
 
   <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" mat-button>Admin Page</a>
 

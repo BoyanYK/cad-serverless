@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Create New Project</h1>
+<!-- <div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <input matInput>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>Ok</button>
+</div> -->
+<form>
+  <mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="manager" required placeholder="Project Manager" class="input-field">
+        <mat-option *ngFor="let dev of seniorDevs" [value]="dev.value">{{dev.viewValue}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Team Size">
+    </mat-form-field>
+    <mat-form-field>
+      <!-- ? Maybe chip list? -->
+      <input matInput placeholder="Skills Needed">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matTextAreaAutosize placeholder="Description">
+
+            </textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="members">
+    </mat-form-field>
+  </mat-form-field>
+</form>

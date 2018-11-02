@@ -136,7 +136,6 @@
             "Project_Manager": "Senior_Dev_A",
             "Project_Description": "Some Description",
             "Team_Size": 3,
-            "Role": "Role",
             "Developers": [
                 "Developer_A",
                 "Developer_B",
