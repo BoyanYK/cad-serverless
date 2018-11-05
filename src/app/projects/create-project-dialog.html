@@ -9,27 +9,47 @@
   <button mat-button (click)="onNoClick()">No Thanks</button>
   <button mat-button (click)="onNoClick()" cdkFocusInitial>Ok</button>
 </div> -->
-<form>
-  <mat-form-field>
-    <mat-form-field>
-      <mat-select formControlName="manager" required placeholder="Project Manager" class="input-field">
-        <mat-option *ngFor="let dev of seniorDevs" [value]="dev.value">{{dev.viewValue}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Team Size">
-    </mat-form-field>
-    <mat-form-field>
-      <!-- ? Maybe chip list? -->
-      <input matInput placeholder="Skills Needed">
-    </mat-form-field>
-    <mat-form-field>
-      <textarea matTextAreaAutosize placeholder="Description">
-
-            </textarea>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="members">
-    </mat-form-field>
+<form [formGroup]="project" fxLayout="column">
+  <mat-form-field class="input">
+    <mat-select formControlName="manager" required placeholder="Project Manager" class="input-field">
+      <mat-option *ngFor="let dev of seniorDevs" [value]="dev.value">{{dev.viewValue}}</mat-option>
+    </mat-select>
   </mat-form-field>
+  <mat-form-field class="input">
+    <input matInput type="number" placeholder="Team Size">
+  </mat-form-field>
+  <mat-form-field class="input">
+    <mat-chip-list #skillList class="mat-chip-list">
+      <mat-chip *ngFor="let skill of skills" [removable]="removable" (removed)="remove(skill)">
+        {{skill}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input matInput placeholder="New skill..." [matChipInputFor]="skillList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+  </mat-form-field>
+  <mat-form-field class="input">
+    <textarea matInput formControlName="description" matTextareaAutosize matAutosizeMinRows=1 placeholder="Description"></textarea>
+  </mat-form-field>
+  <!-- <mat-form-field>
+      <input matInput placeholder="members">
+    </mat-form-field> -->
 </form>
+<mat-dialog-actions fxLayoutAlign="end">
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>
+<!-- 
+<mat-dialog-content [formGroup]="form">
+
+  <mat-form-field>
+    <input matInput placeholder="Course Description" formControlName="description">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>
+ -->

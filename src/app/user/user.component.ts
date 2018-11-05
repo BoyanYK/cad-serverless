@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import decode from 'jwt-decode';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
