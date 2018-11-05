@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatChipInputEvent } from '@angular/material';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 
 
 export interface ProjectData {
@@ -33,7 +35,8 @@ export interface Task {
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-  constructor(public dialog: MatDialog) {
+  projects: Object[]; //TODO extract Senior Devs with first/last name + username, to use in project creation
+  constructor(public dialog: MatDialog, public http: HttpClient) {
     console.log("Hello from projects");
     let a: Task = {
       name: "Task",
@@ -44,7 +47,28 @@ export class ProjectsComponent implements OnInit {
       status: "done"
     }
 
-    console.log(a);
+    var params = new HttpParams({ fromString: 'queryType=scan' });
+    var query = {
+      TableName: 'Projects'
+    };
+    this.projects = new Array();
+    //TODO structure/interface UserProfile to use insead of <any>
+    var response = this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params });
+    response.subscribe((data) => {
+      data.forEach(element => {
+        this.projects.push({
+          name: element.project_name,
+          manager: element.project_manager,
+          skills: element.skills,
+          team_size: element.team_size,
+          description: element.description
+        })
+      });
+    });
+  }
+
+  getProjects(): void {
+
   }
 
   ngOnInit() {
@@ -58,30 +82,14 @@ export class ProjectsComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '500px';
     dialogConfig.data = {
-      id: 1,
-      title: 'Angular For Beginners',
       seniorDevs: [
-        { value: "Dev1", viewValue: "Dev1" },
+        { value: "porreq", viewValue: "porreq" },
         { value: "Dev2", viewValue: "Dev2" },
         { value: "Dev3", viewValue: "Dev3" }
       ]
     };
 
     this.dialog.open(CreateProjectDialog, dialogConfig);
-
-    /* const dialogRef = this.dialog.open(CreateProjectDialog, {
-      width: '250px',
-      project: {a: 2},
-      seniorDevs: [
-        { value: "Dev1", viewValue: "Dev1" },
-        { value: "Dev2", viewValue: "Dev2" },
-        { value: "Dev3", viewValue: "Dev3" }
-      ]
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    }); */
   }
 }
 
@@ -100,12 +108,14 @@ export class CreateProjectDialog {
 
   seniorDevs: Object[];
   project = new FormGroup({
+    name: new FormControl(),
     manager: new FormControl(),
     skills: new FormControl(),
+    teamSize: new FormControl(),
     description: new FormControl()
   });
   skills = [];
-  constructor(
+  constructor(public http: HttpClient, private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<CreateProjectDialog>,
     @Inject(MAT_DIALOG_DATA) data/* , public seniorDevs: Dev[] */) {
     this.seniorDevs = data.seniorDevs;
@@ -140,7 +150,22 @@ export class CreateProjectDialog {
     }
   }
 
-  onNoClick(): void {
+  submit(): void {
+
+    var tableUpdate = {
+      TableName: 'Projects',
+      Item: {
+        project_name: this.project.controls['name'].value,
+        project_manager: this.project.controls['manager'].value,
+        skills: this.skills,
+        team_size: this.project.controls['teamSize'].value,
+        description: this.project.controls['description'].value
+      }
+    }
+    console.log(tableUpdate);
+    postToDynamo(this.http, tableUpdate, this.snackBar, "Project created successfully", "Project creation failed");
+
+
     this.dialogRef.close();
   }
 
@@ -148,4 +173,19 @@ export class CreateProjectDialog {
     this.dialogRef.close();
   }
 
+}
+
+function postToDynamo(http, query, snack, success, fail) {
+  console.log(query);
+  http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', query)
+    .subscribe(
+      res => {
+        console.log(res);
+        snack.open(success, 'Dismiss', { panelClass: ['snackbar-style-success'] });
+      },
+      err => {
+        console.log("Error occured", err);
+        snack.open(fail, 'Dismiss', { panelClass: ['snackbar-style-fail'] });
+      }
+    );
 }

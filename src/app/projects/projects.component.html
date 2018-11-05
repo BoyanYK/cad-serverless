@@ -4,3 +4,42 @@
 <!-- TODO uncomment later when finishing testing dialog <button *ngIf="canCreateProject" mat-button (click)="openNewProjectDialog()">Create New Project</button> -->
 
 <button mat-flat-button (click)="openNewProjectDialog()" color="primary">Create New Project</button>
+
+
+<div class="container">
+  <header>
+  </header>
+
+  <nav>
+
+  </nav>
+
+  <main class="mat-typography">
+    <ng-masonry-grid>
+      <ng-masonry-grid-item *ngFor="let project of projects" (click)="openNewProjectDialog()">
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title>Project Name: {{project.name}}</mat-card-title>
+            <mat-card-subtitle>Project Manager: {{project.manager}}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-chip-list class="chipList">
+              <mat-chip *ngFor="let skill of project.skills">
+                {{skill}}
+              </mat-chip>
+            </mat-chip-list>
+            <p class="content-text">Team Size: {{project.team_size}}</p>
+            <p class="content-text">Description: {{project.description}}</p>
+          </mat-card-content>
+        </mat-card>
+      </ng-masonry-grid-item>
+    </ng-masonry-grid>
+  </main>
+
+  <aside></aside>
+
+  <footer>
+    <!-- Footer content -->
+  </footer>
+</div>
