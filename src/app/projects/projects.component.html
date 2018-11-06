@@ -4,6 +4,10 @@
 <!-- TODO uncomment later when finishing testing dialog <button *ngIf="canCreateProject" mat-button (click)="openNewProjectDialog()">Create New Project</button> -->
 
 <button mat-flat-button (click)="openNewProjectDialog()" color="primary">Create New Project</button>
+<mat-form-field>
+  <input matInput #query placeholder="Project Name" value="value">
+</mat-form-field>
+<button class="mat-raised-button mat-primary" (click)="searchProjects(query.value)">Search</button>
 
 
 <div class="container">
@@ -30,6 +34,11 @@
               </mat-chip>
             </mat-chip-list>
             <p class="content-text">Team Size: {{project.team_size}}</p>
+            <mat-chip-list class="chipList">
+              <mat-chip *ngFor="let developer of project.developers">
+                {{developer}}
+              </mat-chip>
+            </mat-chip-list>
             <p class="content-text">Description: {{project.description}}</p>
           </mat-card-content>
         </mat-card>
