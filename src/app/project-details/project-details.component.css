@@ -20,11 +20,11 @@ header {
 }
 
 /* main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-   */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+     */
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -71,8 +71,8 @@ mat-card-content {
 }
 
 /* mat-card-title {
-      font-size: 25px!important;
-  } */
+        font-size: 25px!important;
+    } */
 main {
   grid-area: content;
 }

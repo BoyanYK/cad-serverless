@@ -106,7 +106,7 @@
 
 
 -   **Tables structure**
-        \* Users Table
+    -   Users Table 
         ```js
           {
               "User_ID": 100,
@@ -128,22 +128,22 @@
               ]
           }
         ```
-        * Projects Table
-        ```js
-        {
-            "Project_ID": 100,
-            "Project_Name": "Name",
-            "Project_Manager": "Senior_Dev_A",
-            "Project_Description": "Some Description",
-            "Team_Size": 3,
-            "Developers": [
-                "Developer_A",
-                "Developer_B",
-                "Developer_C"
-            ]
-          }
-        ```
-    ### 4. Libraries and other resources
+    -   Projects Table
+            ```js
+            {
+                "Project_ID": 100,
+                "Project_Name": "Name",
+                "Project_Manager": "Senior_Dev_A",
+                "Project_Description": "Some Description",
+                "Team_Size": 3,
+                "Developers": [
+                    "Developer_A",
+                    "Developer_B",
+                    "Developer_C"
+                ]
+              }
+            ```
+        ### 4. Libraries and other resources
 -   [AWS Cognito User Creation](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-user-identity-pools-javascript-examples.html)
 -   [AWS Cognito User Authentication](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-identity-user-pools-javascript-example-authenticating-admin-created-user.html)
 -   [Notifications](https://github.com/jacob-meacham/angular-notification-icons)

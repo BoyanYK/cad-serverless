@@ -1,0 +1,45 @@
+<div class="container">
+  <header>
+  </header>
+
+  <nav>
+
+  </nav>
+  <main class="typography">
+    <h2>Project Name: {{project.name}}</h2>
+    <h3>Project Manager: {{project.manager}}</h3>
+    <mat-grid-list cols="4" rowHeight="100px">
+      <mat-grid-tile [colspan]=1 [rowspan]=1>
+        {{project.description}}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]=4 [rowspan]=1>
+        {{project.developers}}
+      </mat-grid-tile>
+    </mat-grid-list>
+    <ng-masonry-grid>
+      <ng-masonry-grid-item *ngFor="let task of project.tasks">
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title>Task Name: {{task.name}}</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <h5>Date assigned: {{task.date_assigned}}</h5>
+            <h5>Date due: {{task.date_due}}</h5>
+            <h5>Assigned to: {{task.assignee}}</h5>
+            <h5>Status: {{task.status}}</h5>
+          </mat-card-content>
+        </mat-card>
+      </ng-masonry-grid-item>
+    </ng-masonry-grid>
+
+
+
+  </main>
+
+  <aside></aside>
+
+  <footer>
+    <!-- Footer content -->
+  </footer>
+</div>

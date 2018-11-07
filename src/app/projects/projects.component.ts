@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 
 export interface ProjectData {
@@ -35,8 +36,9 @@ export interface Task {
     styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
+    id: string;
     projects: Object[]; //TODO extract Senior Devs with first/last name + username, to use in project creation
-    constructor(public dialog: MatDialog, public http: HttpClient) {
+    constructor(public dialog: MatDialog, public http: HttpClient, public router: Router) {
         console.log("Hello from projects");
         let a: Task = {
             name: "Task",
@@ -57,10 +59,12 @@ export class ProjectsComponent implements OnInit {
         response.subscribe((data) => {
             data.forEach(element => {
                 this.projects.push({
+                    uniqueProjID: element['uniqueProjID'],
                     name: element.project_name,
                     manager: element.project_manager,
                     skills: element.skills,
                     team_size: element.team_size,
+                    max_team_size: element.max_team_size,
                     description: element.description,
                     developers: ['Dev A', 'Dev B']
                 })
@@ -81,10 +85,12 @@ export class ProjectsComponent implements OnInit {
         response.subscribe((data) => {
             data.forEach(element => {
                 this.projects = [{
+                    uniqueProjID: element['uniqueProjID'],
                     name: element.project_name,
                     manager: element.project_manager,
                     skills: element.skills,
                     team_size: element.team_size,
+                    max_team_size: element.max_team_size,
                     description: element.description,
                     developers: ['Dev A', 'Dev B']
                 }];
@@ -99,6 +105,9 @@ export class ProjectsComponent implements OnInit {
     ngOnInit() {
     }
 
+    openProject(project): void {
+        this.router.navigate(['../project/' + project.uniqueProjID]);
+    }
     openNewProjectDialog() {
 
         const dialogConfig = new MatDialogConfig();
@@ -140,7 +149,7 @@ export class CreateProjectDialog {
         description: new FormControl()
     });
     skills = [];
-    constructor(public http: HttpClient, private snackBar: MatSnackBar,
+    constructor(public http: HttpClient, private snackBar: MatSnackBar, public router: Router,
         public dialogRef: MatDialogRef<CreateProjectDialog>,
         @Inject(MAT_DIALOG_DATA) data/* , public seniorDevs: Dev[] */) {
         this.seniorDevs = data.seniorDevs;
@@ -176,19 +185,19 @@ export class CreateProjectDialog {
     }
 
     submit(): void {
-
         var tableUpdate = {
             TableName: 'Projects',
             Item: {
+                uniqueProjID: btoa(this.project.controls['name'].value + "<>" + this.project.controls['manager'].value + "<>" + Date.now()),
                 project_name: this.project.controls['name'].value,
                 project_manager: this.project.controls['manager'].value,
                 skills: this.skills,
-                team_size: this.project.controls['teamSize'].value,
+                team_size: 0,
+                max_team_size: this.project.controls['teamSize'].value,
                 description: this.project.controls['description'].value
             }
         }
-        console.log(tableUpdate);
-        postToDynamo(this.http, tableUpdate, this.snackBar, "Project created successfully", "Project creation failed");
+        postToDynamo(this.http, tableUpdate, this.snackBar, this.router, "Project created successfully", "Project creation failed");
 
 
         this.dialogRef.close();
@@ -200,17 +209,24 @@ export class CreateProjectDialog {
 
 }
 
-function postToDynamo(http, query, snack, success, fail) {
+function postToDynamo(http, query, snack, router, success, fail) {
     console.log(query);
     http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', query)
         .subscribe(
             res => {
                 console.log(res);
-                snack.open(success, 'Dismiss', { panelClass: ['snackbar-style-success'] });
+                snack.open(success, 'Dismiss', {
+                    panelClass: ['snackbar-style-success'],
+                    duration: 1500
+                });
+                router.navigate(['../project/' + query.Item.uniqueProjID]);
             },
             err => {
                 console.log("Error occured", err);
-                snack.open(fail, 'Dismiss', { panelClass: ['snackbar-style-fail'] });
+                snack.open(fail, 'Dismiss', {
+                    panelClass: ['snackbar-style-fail'],
+                    duration: 1500
+                });
             }
         );
 }

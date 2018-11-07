@@ -24,6 +24,7 @@ import { UserComponent } from './user/user.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
 import { ProjectsComponent, CreateProjectDialog } from './projects/projects.component';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -37,7 +38,8 @@ export function tokenGetter() {
     UserComponent,
     ProfilesComponent,
     ProjectsComponent,
-    CreateProjectDialog
+    CreateProjectDialog,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +47,9 @@ export function tokenGetter() {
     MatButtonModule,
     MatInputModule,
     FormsModule,
+    AdminModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    AdminModule,
     AuthModule,
     MatToolbarModule,
     MatIconModule,
