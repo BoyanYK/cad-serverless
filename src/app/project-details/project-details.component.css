@@ -47,6 +47,7 @@ mat-card-header {
   background: rgba(0, 0, 0, .06);
   padding-top: 10px;
   padding-left: 10px;
+  padding-bottom: 10px;
   /* padding:10px 10px 10px 10px; */
 }
 
@@ -56,19 +57,22 @@ mat-card-content {
   /* padding:10px 10px 10px 10px; */
 }
 
-.first-item {
-  margin-left: 10px !important;
-}
-
 .card {
   margin-top: 15px;
   margin-right: 15px;
 }
 
+.card h3 {
+  margin-block-start: 2px;
+  margin-block-end: 2px;
+  padding-top: 5px;
+}
+
+/* 
 .content-text {
   padding-left: 10px;
   padding-right: 10px;
-}
+} */
 
 /* mat-card-title {
         font-size: 25px!important;

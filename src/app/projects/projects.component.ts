@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatChipInputEvent } from '@angular/material';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -141,15 +141,9 @@ export class CreateProjectDialog {
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
     seniorDevs: Object[];
-    project = new FormGroup({
-        name: new FormControl(),
-        manager: new FormControl(),
-        skills: new FormControl(),
-        teamSize: new FormControl(),
-        description: new FormControl()
-    });
+    project: FormGroup;
     skills = [];
-    constructor(public http: HttpClient, private snackBar: MatSnackBar, public router: Router,
+    constructor(public http: HttpClient, private snackBar: MatSnackBar, public router: Router, private formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<CreateProjectDialog>,
         @Inject(MAT_DIALOG_DATA) data/* , public seniorDevs: Dev[] */) {
         this.seniorDevs = data.seniorDevs;
@@ -158,7 +152,13 @@ export class CreateProjectDialog {
           { value: "Dev2", viewValue: "Dev2" },
           { value: "Dev3", viewValue: "Dev3" }
         ]; */
-
+        this.project = formBuilder.group({
+            name: ['', Validators.required],
+            manager: ['', Validators.required],
+            skills: [''],
+            teamSize: ['', Validators.required],
+            description: ['', Validators.required]
+        });
     }
 
     add(event: MatChipInputEvent): void {
@@ -185,6 +185,10 @@ export class CreateProjectDialog {
     }
 
     submit(): void {
+        if (this.project.invalid || this.skills === undefined || this.skills.length == 0) {
+            console.log(this.project);
+            return;
+        }
         var tableUpdate = {
             TableName: 'Projects',
             Item: {

@@ -5,7 +5,7 @@
   <nav>
 
   </nav>
-  <main class="typography">
+  <main>
     <h2>Project Name: {{project.name}}</h2>
     <h3>Project Manager: {{project.manager}}</h3>
     <mat-grid-list cols="4" rowHeight="100px">
@@ -17,17 +17,42 @@
       </mat-grid-tile>
     </mat-grid-list>
     <ng-masonry-grid>
-      <ng-masonry-grid-item *ngFor="let task of project.tasks">
+      <ng-masonry-grid-item *ngFor="let task of project.tasks; index as i">
         <mat-card class="card">
           <mat-card-header>
-            <mat-card-title>Task Name: {{task.name}}</mat-card-title>
+            <h3>Task Name: {{task.name}}</h3>
+            <div fxFlex></div>
+            <div *ngIf="task.assignee === user">
+              <!-- <button mat-icon-button (click)="editStatus()">
+                <mat-icon>edit</mat-icon>
+              </button> -->
+
+              <button *ngIf="!changeStatus && task.assignee === user" mat-icon-button (click)="editStatus(i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <div *ngIf="changeStatus && i === taskNumber && task.assignee === user">
+                <button mat-icon-button (click)="editStatus(i, false)">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+                <button mat-icon-button (click)="editStatus(i, true, task)">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </div>
+            </div>
           </mat-card-header>
 
           <mat-card-content>
             <h5>Date assigned: {{task.date_assigned}}</h5>
             <h5>Date due: {{task.date_due}}</h5>
             <h5>Assigned to: {{task.assignee}}</h5>
-            <h5>Status: {{task.status}}</h5>
+            <h5 *ngIf="!changeStatus || i != taskNumber">Status: {{task.status}}</h5>
+            <mat-form-field *ngIf="changeStatus && i === taskNumber && task.assignee === user">
+              <mat-select [formControl]="statusSelect">
+                <mat-option value="Pending">Pending</mat-option>
+                <mat-option value="In Progress">In Progress</mat-option>
+                <mat-option value="Done">Done</mat-option>
+              </mat-select>
+            </mat-form-field>
           </mat-card-content>
         </mat-card>
       </ng-masonry-grid-item>

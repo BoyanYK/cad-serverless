@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams, HttpClient } from '@angular/common/http';
+import decode from 'jwt-decode';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-project-details',
@@ -8,12 +10,29 @@ import { HttpParams, HttpClient } from '@angular/common/http';
   styleUrls: ['./project-details.component.css']
 })
 export class ProjectDetailsComponent implements OnInit {
-  project: Object;
+  project = new Object;
   temp: string;
+  user: string;
+  statusSelect = new FormControl();
+  changeStatus = false;
+  taskNumber: number;
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
     this.getProjectInformation(this.route.snapshot.paramMap.get('project_id'));
+    this.user = decode(localStorage.getItem('token'))['username'];
+    console.log(this.user);
+  }
+
+  editStatus(id: number, submit: boolean, task): void {
+    if (submit) {
+      console.log(this.statusSelect.value);
+      task.status = this.statusSelect.value;
+    } else {
+      this.taskNumber = -1;
+    }
+    this.taskNumber = id;
+    this.changeStatus = !this.changeStatus;
   }
 
   getProjectInformation(project_id: string): void {
@@ -50,7 +69,7 @@ export class ProjectDetailsComponent implements OnInit {
               name: "Task 2",
               date_assigned: "15.02.2016",
               date_due: "31.01.2017",
-              assignee: "Dev A",
+              assignee: "New_User",
               status: "Done"
             },
             {
@@ -64,7 +83,7 @@ export class ProjectDetailsComponent implements OnInit {
               name: "Task 2",
               date_assigned: "15.02.2016",
               date_due: "31.01.2017",
-              assignee: "Dev A",
+              assignee: "New_User",
               status: "Done"
             }]
         };
