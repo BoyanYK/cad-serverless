@@ -68,6 +68,11 @@ mat-card-content {
   padding-top: 5px;
 }
 
+div h3 {
+  margin-block-start: 2px;
+  margin-block-end: 5px;
+}
+
 /* 
 .content-text {
   padding-left: 10px;

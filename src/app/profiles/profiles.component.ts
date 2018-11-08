@@ -21,6 +21,7 @@ export class ProfilesComponent implements OnInit {
     this.profiles = new Array();
     //TODO structure/interface UserProfile to use insead of <any>
     var response = this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params });
+    var cnt = 0;
     response.subscribe((data) => {
       data.forEach(element => {
         this.profiles.push({
@@ -31,6 +32,7 @@ export class ProfilesComponent implements OnInit {
         })
       });
     });
+
   }
 
   userType: string = '';
@@ -38,6 +40,12 @@ export class ProfilesComponent implements OnInit {
   ngOnInit() {
     //TODO uncomment once layout is done
     this.roleGuardService.userType.subscribe(value => this.userType = value);
+  }
+
+  filterProfiles(filter: string): void {
+    console.log("Here");
+    this.profiles = this.profiles.filter(profile => JSON.stringify(profile).includes(filter));
+    //console.log(a);
   }
 
 }

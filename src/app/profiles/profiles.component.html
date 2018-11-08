@@ -15,6 +15,9 @@
   </nav>
 
   <main class="mat-typography">
+    <mat-form-field>
+      <input matInput placeholder="label" (keyup)="filterProfiles($event.target.value)">
+    </mat-form-field>
     <ng-masonry-grid>
       <ng-masonry-grid-item *ngFor="let profile of profiles">
         <mat-card class="card">

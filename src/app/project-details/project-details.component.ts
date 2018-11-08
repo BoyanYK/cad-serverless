@@ -14,14 +14,30 @@ export class ProjectDetailsComponent implements OnInit {
   temp: string;
   user: string;
   statusSelect = new FormControl();
+  devSelect = new FormControl();
   changeStatus = false;
   taskNumber: number;
+  detailsEditable = true;
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
     this.getProjectInformation(this.route.snapshot.paramMap.get('project_id'));
     this.user = decode(localStorage.getItem('token'))['username'];
     console.log(this.user);
+  }
+
+  toggleDetailsEdit(updateProject: boolean): void {
+    if (updateProject)
+    //TODO this is ready to push to database
+    {
+      if (this.devSelect.value === null) {
+        alert("You must select at least one developer");
+        return;
+      }
+    }
+    console.log(this.devSelect.value);
+    this.detailsEditable = !this.detailsEditable;
+    this.devSelect.reset();
   }
 
   editStatus(id: number, submit: boolean, task): void {
@@ -56,7 +72,19 @@ export class ProjectDetailsComponent implements OnInit {
           team_size: element.team_size,
           max_team_size: element.max_team_size,
           description: element.description,
-          developers: ['Dev A', 'Dev B'],
+          developers: [{
+            value: "testuser",
+            viewValue: "Test User"
+          },
+          {
+            value: "anotheruser",
+            viewValue: "Another User"
+          },
+          {
+            value: "newuser",
+            viewValue: "New User"
+          }
+          ],
           tasks: [
             {
               name: "Task 1",
