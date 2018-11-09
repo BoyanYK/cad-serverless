@@ -42,14 +42,14 @@
           <b style="padding-right: 10px">Add Developers to Project</b>
           <mat-form-field>
             <mat-select [formControl]="devSelect" placeholder="Developers" multiple>
-              <mat-option *ngFor="let dev of project.developers" [value]="{value: dev.value, viewValue: dev.viewValue}">{{dev.viewValue}}</mat-option>
+              <mat-option *ngFor="let dev of developers" [value]="{value: dev.value, viewValue: dev.viewValue}">{{dev.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
         </ng-container>
         <div fxFlex></div>
         <h3 *ngIf="!detailsEditable" class="h3-status">Status: {{project.status}}</h3>
         <mat-form-field *ngIf="detailsEditable">
-          <mat-select [formControl]="statusSelect">
+          <mat-select [formControl]="statusSelect" placeholder="Status:">
             <mat-option value="Pending">Pending</mat-option>
             <mat-option value="In Progress">In Progress</mat-option>
             <mat-option value="Done">Done</mat-option>

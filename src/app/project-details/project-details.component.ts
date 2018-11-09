@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import decode from 'jwt-decode';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-project-details',
@@ -11,6 +12,7 @@ import { FormControl } from '@angular/forms';
 })
 export class ProjectDetailsComponent implements OnInit {
   project = new Object;
+  developers = [];
   temp: string;
   user: string;
   statusSelect = new FormControl();
@@ -18,7 +20,7 @@ export class ProjectDetailsComponent implements OnInit {
   changeStatus = false;
   taskNumber: number;
   detailsEditable = true;
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getProjectInformation(this.route.snapshot.paramMap.get('project_id'));
@@ -34,10 +36,34 @@ export class ProjectDetailsComponent implements OnInit {
         alert("You must select at least one developer");
         return;
       }
+      this.project['developers'] = this.devSelect.value,
+        this.project['status'] = this.statusSelect.value
+      var updateProjectQuery = {
+        TableName: "Projects",
+        Item: this.project
+
+      }
+      console.log(updateProjectQuery);
+      this.updateProject(updateProjectQuery);
     }
+    this.updateDevelopers();
     console.log(this.devSelect.value);
     this.detailsEditable = !this.detailsEditable;
     this.devSelect.reset();
+  }
+
+  updateProject(updateQuery): void {
+    this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', updateQuery)
+      .subscribe(
+        res => {
+          console.log(res);
+          this.snackBar.open('Profile updated successfully', 'Dismiss', { panelClass: ['snackbar-style-success'] });
+        },
+        err => {
+          console.log("Error occured", err);
+          this.snackBar.open('Profile update failed', 'Dismiss', { panelClass: ['snackbar-style-fail'] });
+        }
+      );
   }
 
   editStatus(id: number, submit: boolean, task): void {
@@ -49,6 +75,31 @@ export class ProjectDetailsComponent implements OnInit {
     }
     this.taskNumber = id;
     this.changeStatus = !this.changeStatus;
+  }
+
+  updateDevelopers(): void {
+    var params = new HttpParams({ fromString: 'queryType=scan' });
+    var query = {
+      TableName: 'UserProfiles',
+      FilterExpression: "#rl = :r",
+      ExpressionAttributeNames: {
+        "#rl": "role"
+      },
+      ExpressionAttributeValues: {
+        ":r": "Developer"
+      }
+    };
+
+    this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params })
+      .subscribe((data) => {
+        console.log(data);
+        data.forEach(profile => {
+          this.developers.push({
+            value: profile.username,
+            viewValue: profile.first_name + " " + profile.last_name,
+          })
+        });
+      });
   }
 
   getProjectInformation(project_id: string): void {
@@ -66,13 +117,15 @@ export class ProjectDetailsComponent implements OnInit {
       data.forEach(element => {
         this.project = {
           uniqueProjID: element['uniqueProjID'],
-          name: element.project_name,
-          manager: element.project_manager,
+          name: element.name,
+          manager: element.manager,
           skills: element.skills,
           team_size: element.team_size,
           max_team_size: element.max_team_size,
           description: element.description,
-          developers: [{
+          status: element.status,
+          developers: element.developers,
+          /* developers: [{
             value: "testuser",
             viewValue: "Test User"
           },
@@ -84,7 +137,7 @@ export class ProjectDetailsComponent implements OnInit {
             value: "newuser",
             viewValue: "New User"
           }
-          ],
+          ],*/
           tasks: [
             {
               name: "Task 1",

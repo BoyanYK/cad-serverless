@@ -153,3 +153,4 @@
 -   [FlexLayout](https://blog.angularindepth.com/angular-flex-layout-flexbox-and-grid-layout-for-angular-component-6e7c24457b63)
 -   [Dynamo + Lambda Streams](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb-example.html)
 -   [Profiles Masonry Grid](https://www.npmjs.com/package/ng-masonry-grid)
+-   [Flatten Objects](https://www.npmjs.com/package/flat)

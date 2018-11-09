@@ -33,13 +33,14 @@ export interface Task {
 @Component({
     selector: 'app-projects',
     templateUrl: './projects.component.html',
-    styleUrls: ['./projects.component.css']
+    styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
     id: string;
+    search: string;
     projects: Object[]; //TODO extract Senior Devs with first/last name + username, to use in project creation
     constructor(public dialog: MatDialog, public http: HttpClient, public router: Router) {
-        console.log("Hello from projects");
+        this.search = '';
         let a: Task = {
             name: "Task",
             date_assigned: Date.now(),
@@ -60,13 +61,13 @@ export class ProjectsComponent implements OnInit {
             data.forEach(element => {
                 this.projects.push({
                     uniqueProjID: element['uniqueProjID'],
-                    name: element.project_name,
-                    manager: element.project_manager,
+                    name: element.name,
+                    manager: element.manager,
                     skills: element.skills,
                     team_size: element.team_size,
                     max_team_size: element.max_team_size,
                     description: element.description,
-                    developers: ['Dev A', 'Dev B']
+                    developers: element.developers
                 })
             });
         });
@@ -86,8 +87,8 @@ export class ProjectsComponent implements OnInit {
             data.forEach(element => {
                 this.projects = [{
                     uniqueProjID: element['uniqueProjID'],
-                    name: element.project_name,
-                    manager: element.project_manager,
+                    name: element.name,
+                    manager: element.manager,
                     skills: element.skills,
                     team_size: element.team_size,
                     max_team_size: element.max_team_size,
@@ -104,6 +105,7 @@ export class ProjectsComponent implements OnInit {
 
     ngOnInit() {
     }
+
 
     openProject(project): void {
         this.router.navigate(['../project/' + project.uniqueProjID]);

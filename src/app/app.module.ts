@@ -26,6 +26,8 @@ import { NgMasonryGridModule } from 'ng-masonry-grid';
 import { ProjectsComponent, CreateProjectDialog } from './projects/projects.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 
+import { ProjectSearchPipe } from './projects/ProjectSearchPipe';
+
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -39,7 +41,8 @@ export function tokenGetter() {
     ProfilesComponent,
     ProjectsComponent,
     CreateProjectDialog,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    ProjectSearchPipe
   ],
   imports: [
     BrowserModule,

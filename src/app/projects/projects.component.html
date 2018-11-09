@@ -5,7 +5,7 @@
 
 <button mat-flat-button (click)="openNewProjectDialog()" color="primary">Create New Project</button>
 <mat-form-field>
-  <input matInput #query placeholder="Project Name" value="value">
+  <input matInput [(ngModel)]="search" #query placeholder="Project Name" value="">
 </mat-form-field>
 <button class="mat-raised-button mat-primary" (click)="searchProjects(query.value)">Search</button>
 
@@ -20,7 +20,7 @@
 
   <main class="mat-typography">
     <ng-masonry-grid>
-      <ng-masonry-grid-item *ngFor="let project of projects" (click)="openProject(project)">
+      <ng-masonry-grid-item *ngFor="let project of projects | filter:search" (click)="openProject(project)">
         <mat-card class="card">
           <mat-card-header>
             <mat-card-title>Project Name: {{project.name}}</mat-card-title>
@@ -36,7 +36,7 @@
             <p class="content-text">Team Size: {{project.team_size}}/{{project.max_team_size}}</p>
             <mat-chip-list class="chipList">
               <mat-chip *ngFor="let developer of project.developers">
-                {{developer}}
+                {{developer.viewValue}}
               </mat-chip>
             </mat-chip-list>
             <p class="content-text">Description: {{project.description}}</p>
