@@ -12,8 +12,10 @@ import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ProfilesComponent implements OnInit {
   profiles: Object[];
+  userQuery: string;
 
   constructor(private roleGuardService: RoleGuardService, private http: HttpClient) {
+    this.userQuery = '';
     var params = new HttpParams({ fromString: 'queryType=scan' });
     var query = {
       TableName: 'UserProfiles'
@@ -42,10 +44,10 @@ export class ProfilesComponent implements OnInit {
     this.roleGuardService.userType.subscribe(value => this.userType = value);
   }
 
-  filterProfiles(filter: string): void {
+  /* filterProfiles(filter: string): void {
     console.log("Here");
-    this.profiles = this.profiles.filter(profile => JSON.stringify(profile).includes(filter));
+    //this.profiles = this.profiles.filter(profile => JSON.stringify(profile).includes(filter));
     //console.log(a);
-  }
+  } */
 
 }

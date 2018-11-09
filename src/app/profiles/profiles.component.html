@@ -16,10 +16,16 @@
 
   <main class="mat-typography">
     <mat-form-field>
-      <input matInput placeholder="label" (keyup)="filterProfiles($event.target.value)">
+      <input matInput [(ngModel)]="userQuery" placeholder="Lookup..">
     </mat-form-field>
-    <ng-masonry-grid>
-      <ng-masonry-grid-item *ngFor="let profile of profiles">
+
+
+    <!--   <ng-masonry-grid>
+      <ng-masonry-grid-item *ngFor="let profile of profiles | filter:userQuery"> -->
+
+
+    <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center flex-center">
+      <ng-container *ngFor="let profile of profiles | filter:userQuery">
         <mat-card class="card">
           <mat-card-header>
             <div mat-card-avatar class="header-image"></div>
@@ -40,8 +46,15 @@
             <p class="content-text">{{profile.description}}</p>
           </mat-card-content>
         </mat-card>
+      </ng-container>
+    </div>
+
+
+    <!-- 
       </ng-masonry-grid-item>
-    </ng-masonry-grid>
+    </ng-masonry-grid> -->
+
+
   </main>
 
   <aside></aside>
