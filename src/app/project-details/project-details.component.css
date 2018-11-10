@@ -73,6 +73,13 @@ div h3 {
   margin-block-end: 5px;
 }
 
+.descInput {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  right: 10px;
+}
+
 /* 
 .content-text {
   padding-left: 10px;

@@ -148,7 +148,17 @@ export class CreateProjectDialog {
     constructor(public http: HttpClient, private snackBar: MatSnackBar, public router: Router, private formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<CreateProjectDialog>,
         @Inject(MAT_DIALOG_DATA) data/* , public seniorDevs: Dev[] */) {
-        this.seniorDevs = data.seniorDevs;
+        this.seniorDevs = [];
+
+        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Get_Senior_Devs");
+        response.subscribe((data) => {
+            data.Items.forEach(profile => {
+                this.seniorDevs.push({
+                    value: profile.username,
+                    viewValue: profile.first_name + " " + profile.last_name,
+                })
+            });
+        });
         /* this.seniorDevs = [
           { value: "Dev1", viewValue: "Dev1" },
           { value: "Dev2", viewValue: "Dev2" },

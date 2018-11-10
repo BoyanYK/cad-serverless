@@ -24,7 +24,7 @@
 
     <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center flex-center">
       <ng-container *ngFor="let project of projects | filter:search">
-        <mat-card class="card">
+        <mat-card class="card" (click)="openProject(project)">
           <mat-card-header>
             <mat-card-title>Project Name: {{project.name}}</mat-card-title>
             <mat-card-subtitle>Project Manager: {{project.manager}}</mat-card-subtitle>
