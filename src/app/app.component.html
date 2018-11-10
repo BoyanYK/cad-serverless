@@ -1,23 +1,36 @@
 <mat-toolbar *ngIf="userType != '' && path != '/login'" color="primary">
 
-  <a [routerLink]="['../home']" mat-button>
+  <a [routerLink]="['../home']" mat-button (click)="getNotifications()">
     <mat-icon>home</mat-icon>
   </a>
-  <a [routerLink]="['../user']" mat-button>User</a>
+  <a [routerLink]="['../user']" mat-button (click)="getNotifications()">User</a>
 
-  <a [routerLink]="['../profiles']" mat-button>Profiles</a>
+  <a [routerLink]="['../profiles']" mat-button (click)="getNotifications()">Profiles</a>
 
-  <a [routerLink]="['../projects']" mat-button>Projects</a>
-
-  <span class="example-spacer"></span>
+  <a [routerLink]="['../projects']" mat-button (click)="getNotifications()">Projects</a> <span class="example-spacer"></span>
   <!-- <a [routerLink]="['../notifications']" mat-button>
     <mat-icon>notifications</mat-icon>
   </a> -->
-  <a mat-button (click)="incrNots()">
-    <mat-icon matBadge={{notifications}}>notifications</mat-icon>
-  </a>
+  <!-- <a mat-button (click)="incrNots()">
+    <mat-icon matBadge={{notificationsCounter}}>notifications</mat-icon>
+  </a> -->
 
-  <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" mat-button>Admin Page</a>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <ng-container *ngIf="notificationsCounter !== 0 && notificationsCounter !== null">
+      <mat-icon color="warn" matBadge={{notificationsCounter}}>notifications</mat-icon>
+    </ng-container>
+    <ng-container *ngIf="notificationsCounter === 0 || notificationsCounter === null">
+      <mat-icon>notifications</mat-icon>
+    </ng-container>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let notification of notifications; let i = index" (click)="openProject(notification)">
+      <span>{{notification.message}}</span>
+    </button>
+  </mat-menu>
+
+  <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" (click)="getNotifications()" mat-button>Admin
+    Page</a>
 
   <!-- <a [routerLink]="['../logout']" mat-button>Logout</a> -->
   <button [routerLink]="['../']" mat-button (click)="onLogout()">Logout</button>

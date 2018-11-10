@@ -25,7 +25,7 @@ import { ProfilesComponent } from './profiles/profiles.component';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
 import { ProjectsComponent, CreateProjectDialog } from './projects/projects.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
-
+import { MatMenuModule } from '@angular/material/menu';
 import { ProjectSearchPipe } from './projects/ProjectSearchPipe';
 
 export function tokenGetter() {
@@ -66,6 +66,7 @@ export function tokenGetter() {
     MatDialogModule,
     MatOptionModule,
     MatSelectModule,
+    MatMenuModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

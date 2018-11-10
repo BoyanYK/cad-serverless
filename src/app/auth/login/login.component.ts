@@ -23,6 +23,7 @@ import { RoleGuardService } from '../role-guard.service';
 export class LoginComponent {
   message: string;
   route: string;
+  updatePassword = false;
 
   constructor(public authService: AuthService, public router: Router, public http: HttpClient, public roleGuard: RoleGuardService) {
     this.setMessage();
@@ -95,7 +96,6 @@ export class LoginComponent {
   //TODO get above out of here
 
   onSubmit() {
-    alert("Attempting to login");
     this.authenticationData.Username = this.loginForm.controls['username'].value,
       this.userData.Username = this.loginForm.controls['username'].value,
       this.authenticationData.Password = this.loginForm.controls['password'].value,
@@ -113,6 +113,7 @@ export class LoginComponent {
     this.cognitoUser.completeNewPasswordChallenge(this.updatePasswordForm.controls['newPassword'].value, { preferred_username: this.loginForm.controls['username'].value }, {
       onSuccess: function (result) {
         console.log('Successfully changed password');
+        this.updatePassword = false;
       },
       authSuccess: function (result) {
         //Password has been updated.
@@ -158,6 +159,7 @@ export class LoginComponent {
 
       newPasswordRequired: function (userAttributes, requiredAttributes) {
         console.log("new pass required");
+        this.updatePassword = true;
         //alert("New Password Required");
       }
     });

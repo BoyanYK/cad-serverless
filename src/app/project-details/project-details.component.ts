@@ -36,14 +36,15 @@ export class ProjectDetailsComponent implements OnInit {
         alert("You must select at least one developer");
         return;
       }
-      this.project['developers'] = this.devSelect.value,
-        this.project['status'] = this.statusSelect.value
+      this.project['developers'].push(...this.devSelect.value);
+      this.project['status'] = this.statusSelect.value;
       var updateProjectQuery = {
         TableName: "Projects",
         Item: this.project
 
       }
       console.log(updateProjectQuery);
+      this.notifyDevelopers(this.devSelect.value, this.project['uniqueProjID'], this.project['name']);
       this.updateProject(updateProjectQuery);
     }
     this.updateDevelopers();
@@ -52,7 +53,22 @@ export class ProjectDetailsComponent implements OnInit {
     this.devSelect.reset();
   }
 
+  notifyDevelopers(developers: string[], projectId: string, projectName: string): void {
+    var response = this.http.post("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", {
+      usernames: developers,
+      notification: {
+        date: Date.now(),
+        message: "You have been added to project " + projectName,
+        project_id: projectId
+      }
+    });
+    console.log(response);
+    response.subscribe(data => console.log(data));
+  }
+
   updateProject(updateQuery): void {
+    // TODO currently adding a developer overwrites old ones!
+    // * seems to be done now ^
     this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', updateQuery)
       .subscribe(
         res => {

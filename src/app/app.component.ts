@@ -3,6 +3,8 @@ import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cogn
 import { RoleGuardService } from './auth/role-guard.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +13,15 @@ import { Location } from '@angular/common';
 })
 export class AppComponent {
   path: string = '';
-  notifications: number;
-  constructor(private roleGuardService: RoleGuardService, private router: Router, private location: Location) {
+  notificationsCounter: number;
+  notifications: Object[];
+  constructor(private roleGuardService: RoleGuardService, private router: Router, private location: Location, private http: HttpClient) {
     router.events.subscribe((val) => {
       this.path = this.location.path();
     });
-    this.notifications = null;
+    this.notifications = [];
+    this.notificationsCounter = null;
+    this.getNotifications();
   }
 
   userType: string = '';
@@ -34,7 +39,40 @@ export class AppComponent {
   }
 
   incrNots() {
-    this.notifications++;
+    this.notificationsCounter++;
+  }
+
+  getNotifications() {
+    var params = new HttpParams({ fromString: 'username=' + decode(localStorage.getItem('token'))["username"] });
+    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", { params });
+    response.subscribe((data) => {
+      //Clear list of notifications before updating it
+      this.notifications = [];
+      this.notificationsCounter = data.Items[0].Notifications.length;
+      data.Items[0].Notifications.forEach(notification => {
+        this.notifications.push({
+          message: notification.message,
+          date: notification.date,
+          projectId: notification.project_id
+        })
+      });
+    });
+  }
+
+  openProject(notification) {
+    var index = this.notifications.indexOf(notification);
+    this.notifications.splice(index, 1);
+    console.log(this.notifications);
+    var response = this.http.request<any>("delete", "https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", {
+      body: {
+        username: decode(localStorage.getItem('token'))["username"],
+        notifications: this.notifications
+      }
+    });
+    console.log(response);
+    response.subscribe(data => console.log(data));
+    this.notificationsCounter--;
+    this.router.navigate(['../project/' + notification.projectId]);
   }
   /* 
     //TODO refactor entire class, only cognito user is necessary
