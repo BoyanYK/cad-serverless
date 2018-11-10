@@ -30,7 +30,8 @@ export class ProfilesComponent implements OnInit {
           name: element.first_name + " " + element.last_name,
           email: element.email,
           skills: element.skills,
-          description: element.description
+          description: element.description,
+          role: element.role.replace("_", " ")
         })
       });
     });
