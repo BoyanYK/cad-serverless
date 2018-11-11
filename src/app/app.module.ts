@@ -26,6 +26,7 @@ import { ProjectsComponent, CreateProjectDialog } from './projects/projects.comp
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProjectSearchPipe } from './projects/ProjectSearchPipe';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -40,7 +41,8 @@ export function tokenGetter() {
     ProjectsComponent,
     CreateProjectDialog,
     ProjectDetailsComponent,
-    ProjectSearchPipe
+    ProjectSearchPipe,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

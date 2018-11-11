@@ -7,6 +7,7 @@ import { UserComponent } from './user/user.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const appRoutes: Routes = [
   // TODO Change below line to LoginComponent!!!
@@ -16,7 +17,7 @@ const appRoutes: Routes = [
   { path: 'project/:project_id', component: ProjectDetailsComponent, canActivate: [AuthGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
   { path: 'home', component: UserComponent, canActivate: [AuthGuard] },
-  { path: '**', component: UserComponent, canActivate: [AuthGuard] } //TODO uncomment after layout is done
+  { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] } //TODO uncomment after layout is done
 ]
 
 @NgModule({
