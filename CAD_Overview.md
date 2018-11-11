@@ -129,7 +129,7 @@
           }
         ```
     -   Projects Table
-            ```js
+        ```js
             {
                 "Project_ID": 100,
                 "Project_Name": "Name",
@@ -154,3 +154,4 @@
 -   [Dynamo + Lambda Streams](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb-example.html)
 -   [Profiles Masonry Grid](https://www.npmjs.com/package/ng-masonry-grid)
 -   [Flatten Objects](https://www.npmjs.com/package/flat)
+-   [Authorization](https://aws.amazon.com/blogs/mobile/integrating-amazon-cognito-user-pools-with-api-gateway/)

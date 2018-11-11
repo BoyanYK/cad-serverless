@@ -26,13 +26,18 @@ export class ProfilesComponent implements OnInit {
     var cnt = 0;
     response.subscribe((data) => {
       data.forEach(element => {
-        this.profiles.push({
-          name: element.first_name + " " + element.last_name,
-          email: element.email,
-          skills: element.skills,
-          description: element.description,
-          role: element.role.replace("_", " ")
-        })
+        try {
+          this.profiles.push({
+            name: element.first_name + " " + element.last_name,
+            email: element.email,
+            skills: element.skills,
+            description: element.description,
+            role: element.role.replace("_", " ")
+          })
+        }
+        catch (Error) {
+          //Do Nothing
+        }
       });
     });
 

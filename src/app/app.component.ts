@@ -3,7 +3,7 @@ import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cogn
 import { RoleGuardService } from './auth/role-guard.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import decode from 'jwt-decode';
 
 @Component({
@@ -45,18 +45,25 @@ export class AppComponent {
   getNotifications() {
     try {
       var params = new HttpParams({ fromString: 'username=' + decode(localStorage.getItem('token'))["username"] });
-      var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", { params });
+      var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", {
+        params, headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        })
+      });
       response.subscribe((data) => {
         //Clear list of notifications before updating it
-        this.notifications = [];
-        this.notificationsCounter = data.Items[0].Notifications.length;
-        data.Items[0].Notifications.forEach(notification => {
-          this.notifications.push({
-            message: notification.message,
-            date: notification.date,
-            projectId: notification.project_id
-          })
-        });
+        try {
+          this.notifications = [];
+          this.notificationsCounter = data.Items[0].Notifications.length;
+          data.Items[0].Notifications.forEach(notification => {
+            this.notifications.push({
+              message: notification.message,
+              date: notification.date,
+              projectId: notification.project_id
+            })
+          });
+        } catch{ }
       });
     } catch (InvalidTokenSpecified) {
       //Do nothing

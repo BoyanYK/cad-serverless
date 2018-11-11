@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatChipInputEvent } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -150,8 +150,16 @@ export class CreateProjectDialog {
         @Inject(MAT_DIALOG_DATA) data/* , public seniorDevs: Dev[] */) {
         this.seniorDevs = [];
 
-        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Get_Senior_Devs");
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            })
+        };
+
+        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Get_Senior_Devs", httpOptions);
         response.subscribe((data) => {
+            console.log(data);
             data.Items.forEach(profile => {
                 this.seniorDevs.push({
                     value: profile.username,
