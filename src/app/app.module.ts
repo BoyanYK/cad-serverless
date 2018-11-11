@@ -12,7 +12,6 @@ import { MatButtonModule, MatInputModule, MatGridListModule, MatChipsModule, Mat
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { LoginComponent } from './auth/login/login.component';
-import { HomeComponent } from './home/home.component';
 import { AuthModule } from './auth/auth.module'
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './auth/auth.guard';
@@ -35,7 +34,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     UserComponent,
     ProfilesComponent,

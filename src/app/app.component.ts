@@ -43,20 +43,25 @@ export class AppComponent {
   }
 
   getNotifications() {
-    var params = new HttpParams({ fromString: 'username=' + decode(localStorage.getItem('token'))["username"] });
-    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", { params });
-    response.subscribe((data) => {
-      //Clear list of notifications before updating it
-      this.notifications = [];
-      this.notificationsCounter = data.Items[0].Notifications.length;
-      data.Items[0].Notifications.forEach(notification => {
-        this.notifications.push({
-          message: notification.message,
-          date: notification.date,
-          projectId: notification.project_id
-        })
+    try {
+      var params = new HttpParams({ fromString: 'username=' + decode(localStorage.getItem('token'))["username"] });
+      var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", { params });
+      response.subscribe((data) => {
+        //Clear list of notifications before updating it
+        this.notifications = [];
+        this.notificationsCounter = data.Items[0].Notifications.length;
+        data.Items[0].Notifications.forEach(notification => {
+          this.notifications.push({
+            message: notification.message,
+            date: notification.date,
+            projectId: notification.project_id
+          })
+        });
       });
-    });
+    } catch (InvalidTokenSpecified) {
+      //Do nothing
+      console.log(InvalidTokenSpecified);
+    }
   }
 
   openProject(notification) {

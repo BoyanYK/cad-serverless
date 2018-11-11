@@ -3,11 +3,11 @@
   <a [routerLink]="['../home']" mat-button (click)="getNotifications()">
     <mat-icon>home</mat-icon>
   </a>
-  <a [routerLink]="['../user']" mat-button (click)="getNotifications()">User</a>
 
   <a [routerLink]="['../profiles']" mat-button (click)="getNotifications()">Profiles</a>
 
-  <a [routerLink]="['../projects']" mat-button (click)="getNotifications()">Projects</a> <span class="example-spacer"></span>
+  <a [routerLink]="['../projects']" mat-button (click)="getNotifications()">Projects</a>
+  <span class="example-spacer"></span>
   <!-- <a [routerLink]="['../notifications']" mat-button>
     <mat-icon>notifications</mat-icon>
   </a> -->
@@ -29,8 +29,8 @@
     </button>
   </mat-menu>
 
-  <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" (click)="getNotifications()" mat-button>Admin
-    Page</a>
+  <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" (click)="getNotifications()" mat-button>Admin Page
+  </a>
 
   <!-- <a [routerLink]="['../logout']" mat-button>Logout</a> -->
   <button [routerLink]="['../']" mat-button (click)="onLogout()">Logout</button>

@@ -69,12 +69,12 @@
         </mat-card-header>
         <mat-card-content>
           <mat-form-field class="chip-list">
-            <mat-chip-list *ngIf="!isEditable" class="mat-chip-list">
+            <mat-chip-list *ngIf="!isSkillsEditable" class="mat-chip-list">
               <mat-chip *ngFor="let skill of profile.Item.skills">
                 {{skill}}
               </mat-chip>
             </mat-chip-list>
-            <mat-chip-list *ngIf="isEditable" #roleList class="mat-chip-list">
+            <mat-chip-list *ngIf="isSkillsEditable" #roleList class="mat-chip-list">
               <mat-chip *ngFor="let skill of profile.Item.skills" [removable]="removable" (removed)="remove(skill)">
                 {{skill}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
