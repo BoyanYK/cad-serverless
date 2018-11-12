@@ -7,6 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 
 export class RoleGuardService implements CanActivate {
+  /**
+   * Get User Type from Token
+   */
   getUserType() {
     // Get JWT token, decode it, extract groups array, get first item 
     try {
@@ -17,8 +20,17 @@ export class RoleGuardService implements CanActivate {
   }
   userType: BehaviorSubject<string> = new BehaviorSubject<string>(this.getUserType());
 
+  /**
+   * Init services
+   * @param auth Auth Service
+   * @param router rotuing service
+   */
   constructor(public auth: AuthService, public router: Router) { }
 
+  /**
+   * Logic for whether or not a user has access to a route
+   * @param route route that is queried
+   */
   canActivate(route: ActivatedRouteSnapshot): boolean {
     try {
       const expectedRole = route.data.expectedRole;
@@ -38,6 +50,9 @@ export class RoleGuardService implements CanActivate {
     }
   }
 
+  /**
+   * Update user type from token
+   */
   updateUserType(): void {
     this.userType.next(this.getUserType());
   }

@@ -5,7 +5,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import decode from 'jwt-decode';
 
-interface Profile {
+export interface Profile {
   username;
   first_name;
   last_name;

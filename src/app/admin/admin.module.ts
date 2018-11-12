@@ -26,7 +26,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [
     AdminComponent,
-    //LoginComponent
   ]
 })
 export class AdminModule { }

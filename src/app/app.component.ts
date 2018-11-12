@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RoleGuardService } from './auth/role-guard.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import decode from 'jwt-decode';
 
@@ -17,6 +18,7 @@ interface Notification {
 })
 export class AppComponent {
   private notifications: Object[];
+  private path: string = '';
   private userType: string = '';
   /**
    * Constructor initializing services
@@ -24,7 +26,10 @@ export class AppComponent {
    * @param router Router to handle redirects
    * @param http Client to handle API requests
    */
-  constructor(private roleGuardService: RoleGuardService, private router: Router, private http: HttpClient) {
+  constructor(private roleGuardService: RoleGuardService, private router: Router, private location: Location, private http: HttpClient) {
+    router.events.subscribe((val) => {
+      this.path = this.location.path();
+    });
     this.notifications = [];
     this.getNotifications();
   }
@@ -32,14 +37,14 @@ export class AppComponent {
   /**
    * 
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.roleGuardService.userType.subscribe(value => this.userType = value);
   }
 
   /**
    * Logout method
    */
-  onLogout() {
+  onLogout(): void {
     localStorage.clear();
     this.roleGuardService.updateUserType();
   }
@@ -47,7 +52,7 @@ export class AppComponent {
   /**
    * Handler to get notifications for the current user from the database
    */
-  getNotifications() {
+  getNotifications(): void {
     try {
       var params = new HttpParams({ fromString: 'username=' + decode(localStorage.getItem('token'))["username"] });
       var response = this.http.get<Notification[]>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", {
@@ -63,6 +68,7 @@ export class AppComponent {
           data.forEach(notification => {
             this.notifications.push(notification)
           });
+          this.notifications.forEach(a => console.log(a));
         } catch{ }
       });
     } catch (InvalidTokenSpecified) {
@@ -74,7 +80,7 @@ export class AppComponent {
    * Open Project that has been clicked from notification, which also removes the notification for that project
    * @param notification Notification that has been clicked
    */
-  openProject(notification) {
+  openProject(notification): void {
     let index = this.notifications.indexOf(notification);
     this.notifications.splice(index, 1);
     this.http.request<any>("delete", "https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", {

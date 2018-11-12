@@ -7,26 +7,35 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
-
+  public redirectUrl: string;
+  private _isLoggedIn = false;
   constructor(public jwtHelper: JwtHelperService) { }
 
-  private _isLoggedIn = false;
+
   public get isLoggedIn(): boolean {
     return this._isLoggedIn;
   }
 
-  public redirectUrl: string;
 
+  /**
+   * Gettter for if user is authenticated
+   */
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
 
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  /**
+   * Log in
+   */
   login(): void {
     this._isLoggedIn = true;
   };
 
+  /**
+   * Logout
+   */
   logout(): void {
     this._isLoggedIn = false;
   }

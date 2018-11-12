@@ -18,26 +18,17 @@
     <mat-form-field>
       <input matInput [(ngModel)]="userQuery" placeholder="Lookup..">
     </mat-form-field>
-
-
-    <!--   <ng-masonry-grid>
-      <ng-masonry-grid-item *ngFor="let profile of profiles | filter:userQuery"> -->
-
-
     <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center flex-center">
       <ng-container *ngFor="let profile of profiles | filter:userQuery">
         <mat-card class="card">
           <mat-card-header>
             <div mat-card-avatar class="header-image"></div>
-            <mat-card-title>{{profile.name}}</mat-card-title>
+            <mat-card-title>{{profile.first_name + " " + profile.last_name}}</mat-card-title>
             <mat-card-subtitle><a href="mailto:a@a.com">{{profile.email}}</a></mat-card-subtitle>
             <mat-card-subtitle>Role: {{profile.role}}</mat-card-subtitle>
           </mat-card-header>
 
           <mat-card-content>
-            <!-- <ul *ngFor="let item of profile.skills">
-              <li>{{item}}</li>
-            </ul> -->
             <mat-chip-list class="chipList">
               <mat-chip *ngFor="let skill of profile.skills">
                 {{skill}}
@@ -49,13 +40,6 @@
         </mat-card>
       </ng-container>
     </div>
-
-
-    <!-- 
-      </ng-masonry-grid-item>
-    </ng-masonry-grid> -->
-
-
   </main>
 
   <aside></aside>

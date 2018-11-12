@@ -10,14 +10,13 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const appRoutes: Routes = [
-  // TODO Change below line to LoginComponent!!!
   { path: '', component: UserComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuard] },
   { path: 'project/:project_id', component: ProjectDetailsComponent, canActivate: [AuthGuard] },
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
   { path: 'home', component: UserComponent, canActivate: [AuthGuard] },
-  { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] } //TODO uncomment after layout is done
+  { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({

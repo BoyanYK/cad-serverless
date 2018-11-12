@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 //TODO uncomment once layout is done
 import { RoleGuardService } from '../auth/role-guard.service';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
+import { Profile } from '../user/user.component';
 
 @Component({
   selector: 'app-home',
@@ -11,31 +12,28 @@ import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./profiles.component.css']
 })
 export class ProfilesComponent implements OnInit {
-  private profiles: Object[];
+  private profiles: Profile[];
   private userQuery: string = '';
+  private userType: string = '';
 
+  /**
+   * Init services
+   * @param roleGuardService role guard service
+   * @param http client for API requests
+   */
   constructor(private roleGuardService: RoleGuardService, private http: HttpClient) {
-    var params = new HttpParams()
+    let params = new HttpParams()
       .set('queryType', 'getUsers');
-    var headers = new HttpHeaders({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token')
     })
     this.profiles = [];
-    //TODO structure/interface UserProfile to use insead of <any>
-    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params });
-    var cnt = 0;
+    var response = this.http.get<Profile[]>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params });
     response.subscribe((data) => {
       data.forEach(element => {
-        //console.log(element);
         try {
-          this.profiles.push({
-            name: element.first_name + " " + element.last_name,
-            email: element.email,
-            skills: element.skills,
-            description: element.description,
-            role: element.role.replace("_", " ")
-          })
+          this.profiles.push(element)
         }
         catch (Error) {
           //Do Nothing
@@ -45,17 +43,11 @@ export class ProfilesComponent implements OnInit {
 
   }
 
-  userType: string = '';
-
-  ngOnInit() {
+  /**
+   * get User Type
+   */
+  ngOnInit(): void {
     //TODO uncomment once layout is done
     this.roleGuardService.userType.subscribe(value => this.userType = value);
   }
-
-  /* filterProfiles(filter: string): void {
-    console.log("Here");
-    //this.profiles = this.profiles.filter(profile => JSON.stringify(profile).includes(filter));
-    //console.log(a);
-  } */
-
 }

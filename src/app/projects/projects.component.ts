@@ -12,16 +12,17 @@ export interface ProjectData {
     name: string,
     manager: string,
     skills: string[],
-    developers: string[],
+    developers: Developer[],
     description: string,
+    status: string,
 }
 
-export interface Dev {
+export interface Developer {
     value: string;
     viewValue: string;
 }
 
-export interface Task {
+interface Task {
     name: string;
     date_assigned: number;
     date_due: number;
@@ -76,7 +77,7 @@ export class ProjectsComponent {
     /**
      * Create a dialog for new project creation
      */
-    openNewProjectDialog() {
+    openNewProjectDialog(): void {
 
         const dialogConfig = new MatDialogConfig();
 

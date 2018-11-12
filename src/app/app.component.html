@@ -18,7 +18,7 @@
     </ng-container>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngFor="let notification of notifications; let i = index" (click)="openProject(notification)">
+    <button mat-menu-item *ngFor="let notification of notifications" (click)="openProject(notification)">
       <span>{{notification.message}}</span>
     </button>
   </mat-menu>

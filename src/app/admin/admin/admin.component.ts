@@ -17,9 +17,8 @@ export interface Role {
 
 
 
-export class AdminComponent implements OnInit {
-
-    roles: Role[];
+export class AdminComponent {
+    private roles: Role[];
 
     createUserForm = new FormGroup({
         firstName: new FormControl(),
@@ -29,38 +28,23 @@ export class AdminComponent implements OnInit {
         role: new FormControl(),
     });
 
+    /**
+     * Init services
+     * @param http client for API requests
+     * @param snackBar for API response vizualization
+     */
     constructor(public http: HttpClient, public snackBar: MatSnackBar) {
         this.roles = [
             { value: 'Administrator', viewValue: "Administrator" },
-            { value: 'HR', viewValue: "Human Resorces" },
             { value: 'Senior_Developer', viewValue: "Senior Developer" },
             { value: 'Developer', viewValue: "Developer" }
         ];
     }
 
-    ngOnInit() {
-    }
-
+    /**
+     * Create a request to API Gateway to create a new user
+     */
     createNewUser(): void {
-
-        //console.log(this.createUserForm);
-        //console.log(this.createUserForm.controls['firstName'].value);
-        //https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Create_User
-        /* "firstName": this.createUserForm.controls['firstName'].value,
-          "lastName": this.createUserForm.controls['lastName'].value,
-          "password": this.createUserForm.controls['password'].value,
-          "role": this.createUserForm.controls['role'].value,
-          "username": this.createUserForm.controls['username'].value, */
-
-        /**
-         * * Example for how authorisation header is passed for later when integrating with API Gateway Auth feature
-         * const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Authorization': 'my-auth-token'
-          })
-          };
-         */
         var headers = new HttpHeaders()
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .set('Authorization', localStorage.getItem('token'));
@@ -74,11 +58,11 @@ export class AdminComponent implements OnInit {
         console.log(params);
         const req = this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Create_User', null, { headers: headers, params: params }).subscribe(
             res => {
-                console.log(res);
+                //console.log(res);
                 this.snackBar.open('User created successfully', 'Dismiss', { panelClass: ['snackbar-style-success'] });
             },
             err => {
-                console.log("Error occured", err);
+                //console.log("Error occured", err);
                 this.snackBar.open('User creation failed', 'Dismiss', { panelClass: ['snackbar-style-fail'] });
             }
         );

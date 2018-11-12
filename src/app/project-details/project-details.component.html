@@ -27,7 +27,7 @@
       </div>
     </div>
     <mat-grid-list cols="4" rowHeight="100px">
-      <mat-grid-tile [colspan]=2 [rowspan]=2 [style.background]="'lightblue'">
+      <mat-grid-tile [colspan]=2 [rowspan]=2>
         <p *ngIf="project['manager'] != 'useremail' || !detailsEditable">Lorem ipsum dolor sit amet consectetur
           adipisicing
           elit. A, harum exercitationem. Dolore cum modi, magni, ea
@@ -37,7 +37,7 @@
           <textarea [(ngModel)]="project.description" matInput matTextareaAutosize matAutosizeMinRows=1 placeholder="Textarea">{{project.description}}</textarea>
         </mat-form-field>
       </mat-grid-tile>
-      <mat-grid-tile [colspan]=2 [rowspan]=1 [style.background]="'lightgreen'">
+      <mat-grid-tile [colspan]=2 [rowspan]=1>
         <!-- TODO need to change to actual current user name -->
         <ng-container *ngIf="project['manager'] === 'useremail' && detailsEditable">
           <b style="padding-right: 10px">Add Developers to Project</b>
@@ -57,7 +57,7 @@
           </mat-select>
         </mat-form-field>
       </mat-grid-tile>
-      <mat-grid-tile [colspan]=2 [rowspan]=1 [style.background]="'lightgray'">
+      <mat-grid-tile [colspan]=2 [rowspan]=1>
         <h3>Developers:</h3>
         <mat-chip-list class="chipList">
           <mat-chip *ngFor="let dev of project['developers']  ">
@@ -73,10 +73,6 @@
             <h3>Task Name: {{task.name}}</h3>
             <div fxFlex></div>
             <div *ngIf="task.assignee === user">
-              <!-- <button mat-icon-button (click)="editStatus()">
-                <mat-icon>edit</mat-icon>
-              </button> -->
-
               <button *ngIf="!changeStatus && task.assignee === user" mat-icon-button (click)="editStatus(i)">
                 <mat-icon>edit</mat-icon>
               </button>

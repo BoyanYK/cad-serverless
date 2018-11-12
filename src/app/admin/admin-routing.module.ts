@@ -4,10 +4,13 @@ import { AdminComponent } from './admin/admin.component';
 
 import { RoleGuardService as RoleGuard } from '../auth/role-guard.service';
 
+/**
+ * Admin protected routes
+ */
 const routes: Routes = [
   {
     path: 'admin', component: AdminComponent, canActivate: [RoleGuard],
-    data: { expectedRole: 'Administrator'}
+    data: { expectedRole: 'Administrator' }
   }
 ];
 
