@@ -3,7 +3,7 @@
   <mat-grid-tile></mat-grid-tile>
   <mat-grid-tile>
     <div id="container">
-      <div [hidden]="updatePassword" *ngIf="!authService.isLoggedIn" id="parent">
+      <div *ngIf="!updatePassword" id="parent">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form_login">
           <mat-form-field class="input-field">
             <input matInput placeholder="Username" formControlName="username">
@@ -18,7 +18,7 @@
       <br>
       <!-- //</div> -->
 
-      <form [hidden]="!updatePassword" [formGroup]="updatePasswordForm">
+      <form *ngIf="updatePassword" [formGroup]="updatePasswordForm">
         <mat-form-field class="input-field">
           <input matInput placeholder="New Password" formControlName="newPassword">
         </mat-form-field>

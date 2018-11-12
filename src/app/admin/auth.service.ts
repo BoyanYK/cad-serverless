@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { tap, delay} from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -8,26 +8,26 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
 
-  constructor(public jwtHelper: JwtHelperService){}
+  constructor(public jwtHelper: JwtHelperService) { }
 
-  public isLoggedIn = false;
+  private _isLoggedIn = false;
+  public get isLoggedIn(): boolean {
+    return this._isLoggedIn;
+  }
 
   public redirectUrl: string;
 
-  public isAuthenticated(): boolean{
+  public isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
 
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  login(): Observable<boolean> {
-    return of(true).pipe(
-      delay(1000),
-      tap(val => this.isLoggedIn = true)
-    );
+  login(): void {
+    this._isLoggedIn = true;
   };
 
   logout(): void {
-    this.isLoggedIn = false;
+    this._isLoggedIn = false;
   }
 }

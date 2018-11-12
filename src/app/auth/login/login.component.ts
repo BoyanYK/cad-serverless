@@ -21,12 +21,16 @@ import { RoleGuardService } from '../role-guard.service';
 }) */
 
 export class LoginComponent {
-  message: string;
-  route: string;
-  updatePassword = false;
+  private message: string;
+  private route: string;
+  updatePassword: boolean = false;
 
   constructor(public authService: AuthService, public router: Router, public http: HttpClient, public roleGuard: RoleGuardService) {
     this.setMessage();
+    console.log(authService.isLoggedIn);
+    if (authService.isLoggedIn) {
+      router.navigate(['/home']);
+    }
   }
   //public authService: AuthService;
 
@@ -109,11 +113,11 @@ export class LoginComponent {
   }
 
   onUpdatePassword() {
-    alert("Attempting to Change Password");
+    let that = this;
     this.cognitoUser.completeNewPasswordChallenge(this.updatePasswordForm.controls['newPassword'].value, { preferred_username: this.loginForm.controls['username'].value }, {
       onSuccess: function (result) {
         console.log('Successfully changed password');
-        this.updatePassword = false;
+        that.updatePassword = false;
       },
       authSuccess: function (result) {
         //Password has been updated.
@@ -135,15 +139,15 @@ export class LoginComponent {
     let that = this;
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
-        var accessToken = result.getAccessToken().getJwtToken();
+        let accessToken = result.getAccessToken().getJwtToken();
         console.log(accessToken);
         console.log("Logged in");
         localStorage.setItem('token', accessToken);
         //let redirect = this.authService.redirectUrl ? '/admin' : '/login';
         //alert("Succesfull Login!!");
-        that.route = '../home';
+        let route = '../home';
         console.log("After navigate");
-        that.redirect(that.route);
+        that.redirect(route);
       },
 
       onFailure: function (err) {
@@ -159,7 +163,8 @@ export class LoginComponent {
 
       newPasswordRequired: function (userAttributes, requiredAttributes) {
         console.log("new pass required");
-        this.updatePassword = true;
+        that.updatePassword = true;
+        console.log(that.updatePassword);
         //alert("New Password Required");
       }
     });
@@ -168,6 +173,7 @@ export class LoginComponent {
   redirect(path: string) {
     //console.log(this.router.navigate([path]));
     this.roleGuard.updateUserType();
+    this.authService.login();
     this.router.navigate([path]);
   }
 

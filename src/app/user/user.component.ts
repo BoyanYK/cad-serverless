@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import decode from 'jwt-decode';
 
@@ -12,17 +12,13 @@ import decode from 'jwt-decode';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  public isSkillsEditable: boolean = false;
-  public isDescEditable: boolean = false;
+  private isSkillsEditable: boolean = false;
+  private isDescEditable: boolean = false;
 
-  profile = {
+  private profile = {
     TableName: "UserProfiles",
     Item: {
       "username": "",
@@ -36,7 +32,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {
     this.getProfile();
 
   }
@@ -44,7 +40,7 @@ export class UserComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-    // Add our fruit
+    // Add the new skill
     if ((value || '').trim()) {
       this.profile.Item.skills.push(value.trim());
     }
@@ -96,7 +92,6 @@ export class UserComponent implements OnInit {
 
   getProfile() {
     var params = new HttpParams({ fromString: 'queryType=query' });
-    //TODO decoding/token is broken - fix!!!
     console.log(decode(localStorage.getItem('token'))["username"]);
     var query = {
       TableName: "UserProfiles",
