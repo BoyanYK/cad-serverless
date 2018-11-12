@@ -83,12 +83,18 @@ export class AppComponent {
   openProject(notification): void {
     let index = this.notifications.indexOf(notification);
     this.notifications.splice(index, 1);
-    this.http.request<any>("delete", "https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/notifications", {
+    console.log(this.notifications);
+    let tmp = this.http.request<any>("delete", "https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/notifications", {
       body: {
         username: decode(localStorage.getItem('token'))["username"],
         notifications: this.notifications
-      }
+      },
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      })
     });
+    tmp.subscribe();
     this.router.navigate(['../project/' + notification.projectId]);
   }
 }
