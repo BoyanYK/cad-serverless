@@ -28,11 +28,7 @@
     </div>
     <mat-grid-list cols="4" rowHeight="100px">
       <mat-grid-tile [colspan]=2 [rowspan]=2>
-        <p *ngIf="!isManager || !detailsEditable">Lorem ipsum dolor sit amet consectetur
-          adipisicing
-          elit. A, harum exercitationem. Dolore cum modi, magni, ea
-          temporibus quis beatae, incidunt tenetur accusantium nobis itaque id? Voluptatem assumenda magnam eius
-          quaerat.{{project.description}}</p>
+        <p *ngIf="!isManager || !detailsEditable">{{project.description}}</p>
         <mat-form-field *ngIf="isManager && detailsEditable" class="descInput">
           <textarea [(ngModel)]="project.description" matInput matTextareaAutosize matAutosizeMinRows=1 placeholder="Textarea">{{project.description}}</textarea>
         </mat-form-field>
