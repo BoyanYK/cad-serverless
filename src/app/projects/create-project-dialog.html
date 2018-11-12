@@ -15,7 +15,7 @@
         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
       </mat-chip>
       <input matInput placeholder="New skill..." [matChipInputFor]="skillList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+        (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>
   </mat-form-field>
   <mat-form-field class="input">

@@ -9,9 +9,9 @@ import { Profile } from '../user/user.component';
   styleUrls: ['./profiles.component.css']
 })
 export class ProfilesComponent implements OnInit {
-  private profiles: Profile[];
-  private userQuery: string = '';
-  private userType: string = '';
+  public profiles: Profile[];
+  public userQuery: string = '';
+  public userType: string = '';
 
   /**
    * Init services

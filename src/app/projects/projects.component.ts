@@ -38,9 +38,9 @@ interface Task {
     styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent {
-    private search: string;
-    private projects: ProjectData[];
-    private isSenior: boolean = false;
+    public search: string;
+    public projects: ProjectData[];
+    public isSenior: boolean = false;
     constructor(public dialog: MatDialog, public http: HttpClient, public router: Router) {
         this.search = '';
         this.getProjects();
@@ -99,9 +99,9 @@ export class ProjectsComponent {
 export class CreateProjectDialog {
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-    private seniorDevs: Object[];
-    private project: FormGroup;
-    private skills = [];
+    public seniorDevs: Object[];
+    public project: FormGroup;
+    public skills = [];
     /**
      * Init services
      * @param http Client for API requests

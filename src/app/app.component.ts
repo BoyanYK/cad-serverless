@@ -18,8 +18,8 @@ interface Notification {
 })
 export class AppComponent {
   private notifications: Object[];
-  private path: string = '';
-  private userType: string = '';
+  public path: string = '';
+  public userType: string = '';
   /**
    * Constructor initializing services
    * @param roleGuardService Role Guard Service for keeping track of User Type

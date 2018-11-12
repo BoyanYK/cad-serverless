@@ -22,9 +22,9 @@ export interface Profile {
 })
 export class UserComponent {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  private isSkillsEditable: boolean = false;
-  private isDescEditable: boolean = false;
-  private profile: Profile;
+  public isSkillsEditable: boolean = false;
+  public isDescEditable: boolean = false;
+  public profile: Profile;
 
   /**
    * Services initialization

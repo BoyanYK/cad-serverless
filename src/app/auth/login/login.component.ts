@@ -15,7 +15,7 @@ import { RoleGuardService } from '../role-guard.service';
 export class LoginComponent {
   private message: string;
   private route: string;
-  private updatePassword: boolean = false;
+  public updatePassword: boolean = false;
   private readonly title = 'Project Management System';
   private readonly poolData = {
     UserPoolId: 'eu-west-2_3zeUtzVmY', // your user pool id here

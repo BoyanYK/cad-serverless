@@ -12,16 +12,16 @@ import { ProjectData } from '../projects/projects.component';
   styleUrls: ['./project-details.component.css']
 })
 export class ProjectDetailsComponent implements OnInit {
-  private project: ProjectData;
+  public project: ProjectData;
   private developers = [];
   private temp: string;
   private user: string;
-  private isManager: boolean = false;
+  public isManager: boolean = false;
   private statusSelect = new FormControl();
   private devSelect = new FormControl();
   private changeStatus = false;
   private taskNumber: number;
-  private detailsEditable: boolean = false;
+  public detailsEditable: boolean = false;
   /**
    * Init services
    * @param route Get project id from route

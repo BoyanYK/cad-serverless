@@ -18,7 +18,7 @@ export interface Role {
 
 
 export class AdminComponent {
-    private roles: Role[];
+    public roles: Role[];
 
     createUserForm = new FormGroup({
         firstName: new FormControl(),
