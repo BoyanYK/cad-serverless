@@ -12,7 +12,7 @@
         <input matInput [(ngModel)]="search" #query placeholder="Project Name" value="">
       </mat-form-field>
       <span class="example-spacer"></span>
-      <button fxLayoutAlign="end" *ngIf="!isSenior" mat-flat-button (click)="openNewProjectDialog()" color="primary">Create
+      <button fxLayoutAlign="end" *ngIf="isSenior" mat-flat-button (click)="openNewProjectDialog()" color="primary">Create
         New Project</button>
 
     </div>

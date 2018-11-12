@@ -68,7 +68,7 @@ export class AppComponent {
           data.forEach(notification => {
             this.notifications.push(notification)
           });
-          this.notifications.forEach(a => console.log(a));
+          this.notifications.forEach(a => console.log());
         } catch{ }
       });
     } catch (InvalidTokenSpecified) {

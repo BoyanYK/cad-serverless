@@ -55,7 +55,7 @@ export class AdminComponent {
             .set('role', this.createUserForm.controls['role'].value)
             .set('username', this.createUserForm.controls['username'].value)
             .set('email', this.createUserForm.controls['username'].value + "@cad-cw-aws.com");
-        console.log(params);
+        //console.log(params);
         const req = this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/Create_User', null, { headers: headers, params: params }).subscribe(
             res => {
                 //console.log(res);

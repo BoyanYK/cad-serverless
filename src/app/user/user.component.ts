@@ -96,7 +96,6 @@ export class UserComponent {
     this.http.put('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users', this.profile)
       .subscribe(
         res => {
-          console.log(res);
           this.snackBar.open('Profile updated successfully', 'Dismiss', {
             panelClass: ['snackbar-style-success'],
             duration: 1500

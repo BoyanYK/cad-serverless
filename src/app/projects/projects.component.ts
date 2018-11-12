@@ -135,7 +135,6 @@ export class CreateProjectDialog {
 
         var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users", { headers: headers, params: params });
         response.subscribe((data) => {
-            console.log(data);
             data.forEach(profile => {
                 this.seniorDevs.push({
                     value: profile.username,
@@ -150,7 +149,6 @@ export class CreateProjectDialog {
      * @param event Chip event
      */
     add(event: MatChipInputEvent): void {
-        console.log(event.value);
         const input = event.input;
         const value = event.value;
         // Add new skill
@@ -181,7 +179,6 @@ export class CreateProjectDialog {
      */
     submit(): void {
         if (this.project.invalid || this.skills === undefined || this.skills.length == 0) {
-            console.log(this.project);
             return;
         }
         var tableUpdate = {
@@ -216,7 +213,6 @@ export class CreateProjectDialog {
  * @param fail message on fail
  */
 function postToDynamo(http, query, snack, router, success, fail) {
-    console.log(query);
     http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/projects', query,
         {
             headers: new HttpHeaders({
@@ -226,7 +222,6 @@ function postToDynamo(http, query, snack, router, success, fail) {
         })
         .subscribe(
             res => {
-                console.log(res);
                 snack.open(success, 'Dismiss', {
                     panelClass: ['snackbar-style-success'],
                     duration: 1500

@@ -30,7 +30,7 @@ export class ProjectDetailsComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute, private http: HttpClient, public snackBar: MatSnackBar) {
     this.user = decode(localStorage.getItem('token'))['username'];
-    console.log(this.user);
+    //console.log(this.user);
   }
 
   /**
@@ -101,29 +101,16 @@ export class ProjectDetailsComponent implements OnInit {
       })
       .subscribe(
         res => {
-          console.log(res);
+          //console.log(res);
           this.snackBar.open('Profile updated successfully', 'Dismiss', { panelClass: ['snackbar-style-success'] });
         },
         err => {
-          console.log("Error occured", err);
+          //console.log("Error occured", err);
           this.snackBar.open('Profile update failed', 'Dismiss', { panelClass: ['snackbar-style-fail'] });
         }
       );
   }
 
-  /*
-  * This is for when Tasks are implemented in Database/API
-  editStatus(id: number, submit: boolean, task): void {
-    if (submit) {
-      console.log(this.statusSelect.value);
-      task.status = this.statusSelect.value;
-    } else {
-      this.taskNumber = -1;
-    }
-    this.taskNumber = id;
-    this.changeStatus = !this.changeStatus;
-  }
-  */
 
   /**
    * Update list of developers
@@ -138,7 +125,6 @@ export class ProjectDetailsComponent implements OnInit {
 
     this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users", { headers: headers, params: params })
       .subscribe((data) => {
-        console.log(data);
         this.developers = []; //Clear list to avoid duplication
         data.forEach(profile => {
           this.developers.push({

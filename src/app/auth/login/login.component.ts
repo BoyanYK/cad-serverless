@@ -49,7 +49,7 @@ export class LoginComponent {
    */
   constructor(public authService: AuthService, public router: Router, public http: HttpClient, public roleGuard: RoleGuardService) {
     this.setMessage();
-    console.log(authService.isLoggedIn);
+    //console.log(authService.isLoggedIn);
     if (authService.isLoggedIn) {
       router.navigate(['/home']);
     }
