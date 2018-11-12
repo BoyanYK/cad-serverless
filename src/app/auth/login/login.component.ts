@@ -73,31 +73,6 @@ export class LoginComponent {
   cognitoUser;
   authenticationDetails;
 
-  //TODO get this out of here
-  testApi() {
-    var params = new HttpParams({ fromString: 'tableName=UserProfiles' });
-    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/getusers", { params });
-    response.subscribe((data) => {
-      data.forEach(element => {
-        console.log(element);
-      });
-    });
-
-    /* const req = this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Create_User', {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
-    })
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log("Error occured");
-        }
-      ); */
-  }
-  //TODO get above out of here
 
   onSubmit() {
     this.authenticationData.Username = this.loginForm.controls['username'].value,

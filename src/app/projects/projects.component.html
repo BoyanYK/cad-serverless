@@ -7,7 +7,6 @@
 <mat-form-field>
   <input matInput [(ngModel)]="search" #query placeholder="Project Name" value="">
 </mat-form-field>
-<button class="mat-raised-button mat-primary" (click)="searchProjects(query.value)">Search</button>
 
 
 <div class="container">
@@ -36,7 +35,6 @@
                 {{skill}}
               </mat-chip>
             </mat-chip-list>
-            <p class="content-text">Team Size: {{project.team_size}}/{{project.max_team_size}}</p>
             <mat-chip-list class="chipList">
               <mat-chip *ngFor="let developer of project.developers">
                 {{developer.viewValue}}

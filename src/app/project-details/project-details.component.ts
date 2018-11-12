@@ -109,6 +109,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params })
       .subscribe((data) => {
         console.log(data);
+        this.developers = []; //Clear list to avoid duplication
         data.forEach(profile => {
           this.developers.push({
             value: profile.username,
@@ -136,24 +137,9 @@ export class ProjectDetailsComponent implements OnInit {
           name: element.name,
           manager: element.manager,
           skills: element.skills,
-          team_size: element.team_size,
-          max_team_size: element.max_team_size,
           description: element.description,
           status: element.status,
           developers: element.developers,
-          /* developers: [{
-            value: "testuser",
-            viewValue: "Test User"
-          },
-          {
-            value: "anotheruser",
-            viewValue: "Another User"
-          },
-          {
-            value: "newuser",
-            viewValue: "New User"
-          }
-          ],*/
           tasks: [
             {
               name: "Task 1",

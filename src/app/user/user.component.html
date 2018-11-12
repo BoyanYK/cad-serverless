@@ -13,10 +13,10 @@
           <mat-card-title styles="text-align: center !important">My Personal Information</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h3>First Name: {{profile.Item.first_name}}</h3>
-          <h3>Last Name: {{profile.Item.last_name}}</h3>
-          <h3>Email: {{profile.Item.email}}</h3>
-          <h3>Role: {{profile.Item.role}}</h3>
+          <h3>First Name: {{profile.first_name}}</h3>
+          <h3>Last Name: {{profile.last_name}}</h3>
+          <h3>Email: {{profile.email}}</h3>
+          <h3>Role: {{profile.role}}</h3>
         </mat-card-content>
       </mat-card>
 
@@ -39,11 +39,10 @@
           </div>
         </mat-card-header>
         <mat-card-content class="descCard">
-          <h3 *ngIf="!isDescEditable">{{profile.Item.description}}</h3>
+          <h3 *ngIf="!isDescEditable">{{profile.description}}</h3>
 
           <mat-form-field *ngIf="isDescEditable" class="descInput">
-            <textarea [(ngModel)]="profile.Item.description" matInput matTextareaAutosize matAutosizeMinRows=1
-              placeholder="Textarea">{{profile.Item.description}}</textarea>
+            <textarea [(ngModel)]="profile.description" matInput matTextareaAutosize matAutosizeMinRows=1 placeholder="Textarea">{{profile.description}}</textarea>
           </mat-form-field>
         </mat-card-content>
       </mat-card>
@@ -70,12 +69,12 @@
         <mat-card-content>
           <mat-form-field class="chip-list">
             <mat-chip-list *ngIf="!isSkillsEditable" class="mat-chip-list">
-              <mat-chip *ngFor="let skill of profile.Item.skills">
+              <mat-chip *ngFor="let skill of profile.skills">
                 {{skill}}
               </mat-chip>
             </mat-chip-list>
             <mat-chip-list *ngIf="isSkillsEditable" #roleList class="mat-chip-list">
-              <mat-chip *ngFor="let skill of profile.Item.skills" [removable]="removable" (removed)="remove(skill)">
+              <mat-chip *ngFor="let skill of profile.skills" [removable]="removable" (removed)="remove(skill)">
                 {{skill}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
               </mat-chip>

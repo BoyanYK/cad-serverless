@@ -50,13 +50,24 @@ export class ProjectsComponent implements OnInit {
             status: "done"
         }
 
+        this.getProjects();
+    }
+
+    getProjects(): void {
         var params = new HttpParams({ fromString: 'queryType=scan' });
         var query = {
             TableName: 'Projects'
         };
         this.projects = new Array();
         //TODO structure/interface UserProfile to use insead of <any>
-        var response = this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params });
+        var response = this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query,
+            {
+                params: params,
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                })
+            });
         response.subscribe((data) => {
             data.forEach(element => {
                 this.projects.push({
@@ -64,43 +75,11 @@ export class ProjectsComponent implements OnInit {
                     name: element.name,
                     manager: element.manager,
                     skills: element.skills,
-                    team_size: element.team_size,
-                    max_team_size: element.max_team_size,
                     description: element.description,
                     developers: element.developers
                 })
             });
         });
-    }
-
-    searchProjects(projectName: string): void {
-        var params = new HttpParams({ fromString: 'queryType=query' });
-        var query = {
-            TableName: "Projects",
-            KeyConditionExpression: "project_name = :p",
-            ExpressionAttributeValues: {
-                ":p": projectName
-            }
-        };
-        var response = this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params });
-        response.subscribe((data) => {
-            data.forEach(element => {
-                this.projects = [{
-                    uniqueProjID: element['uniqueProjID'],
-                    name: element.name,
-                    manager: element.manager,
-                    skills: element.skills,
-                    team_size: element.team_size,
-                    max_team_size: element.max_team_size,
-                    description: element.description,
-                    developers: ['Dev A', 'Dev B']
-                }];
-            });
-        });
-    }
-
-    getProjects(): void {
-
     }
 
     ngOnInit() {
@@ -216,8 +195,6 @@ export class CreateProjectDialog {
                 project_name: this.project.controls['name'].value,
                 project_manager: this.project.controls['manager'].value,
                 skills: this.skills,
-                team_size: 0,
-                max_team_size: this.project.controls['teamSize'].value,
                 description: this.project.controls['description'].value
             }
         }
