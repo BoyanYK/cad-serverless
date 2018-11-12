@@ -16,27 +16,31 @@ export class ProjectDetailsComponent implements OnInit {
   private developers = [];
   private temp: string;
   private user: string;
+  private isManager: boolean = false;
   private statusSelect = new FormControl();
   private devSelect = new FormControl();
   private changeStatus = false;
   private taskNumber: number;
-  private detailsEditable = true;
+  private detailsEditable: boolean = false;
   /**
    * Init services
    * @param route Get project id from route
    * @param http client for API requests
    * @param snackBar for visualizing API responses
    */
-  constructor(private route: ActivatedRoute, private http: HttpClient, public snackBar: MatSnackBar) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, public snackBar: MatSnackBar) {
+    this.user = decode(localStorage.getItem('token'))['username'];
+    console.log(this.user);
+  }
 
   /**
    * Startup actions
    */
   ngOnInit(): void {
     this.getProjectInformation(this.route.snapshot.paramMap.get('project_id'));
-    this.user = decode(localStorage.getItem('token'))['username'];
+
     this.project = {} as ProjectData;
-    console.log(this.user);
+
   }
 
   /**
@@ -45,9 +49,7 @@ export class ProjectDetailsComponent implements OnInit {
    * @param updateProject whether to push update to database
    */
   toggleDetailsEdit(updateProject: boolean): void {
-    if (updateProject)
-    //TODO this is ready to push to database
-    {
+    if (updateProject) {
       if (this.devSelect.value === null) {
         alert("You must select at least one developer");
         return;
@@ -70,7 +72,7 @@ export class ProjectDetailsComponent implements OnInit {
    * @param projectName project name
    */
   notifyDevelopers(developers: string[], projectId: string, projectName: string): void {
-    let response = this.http.post("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/notifications", {
+    let response = this.http.post("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/notifications", {
       usernames: developers,
       notification: {
         date: Date.now(),
@@ -90,7 +92,7 @@ export class ProjectDetailsComponent implements OnInit {
    * Push project updates to database
    */
   updateProject(): void {
-    this.http.put('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects', this.project,
+    this.http.put('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/projects', this.project,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -134,7 +136,7 @@ export class ProjectDetailsComponent implements OnInit {
       'Authorization': localStorage.getItem('token')
     })
 
-    this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params })
+    this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users", { headers: headers, params: params })
       .subscribe((data) => {
         console.log(data);
         this.developers = []; //Clear list to avoid duplication
@@ -152,7 +154,6 @@ export class ProjectDetailsComponent implements OnInit {
    * @param project_id Project id
    */
   getProjectInformation(project_id: string): void {
-    //TODO fetch from dynamo
     let params = new HttpParams()
       .set('queryType', 'getProject')
       .set('projectId', project_id);
@@ -160,9 +161,10 @@ export class ProjectDetailsComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token')
     })
-    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects", { headers: headers, params: params });
+    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/projects", { headers: headers, params: params });
     response.subscribe((data) => {
       this.project = data[0];
+      this.isManager = this.project.manager === this.user;
     });
   }
 

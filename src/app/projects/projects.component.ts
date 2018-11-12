@@ -5,6 +5,7 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import decode from 'jwt-decode';
 
 
 export interface ProjectData {
@@ -38,10 +39,12 @@ interface Task {
 })
 export class ProjectsComponent {
     private search: string;
-    private projects: ProjectData[]; //TODO extract Senior Devs with first/last name + username, to use in project creation
+    private projects: ProjectData[];
+    private isSenior: boolean = false;
     constructor(public dialog: MatDialog, public http: HttpClient, public router: Router) {
         this.search = '';
         this.getProjects();
+        this.isSenior = decode(localStorage.getItem('token'))['cognito:groups'][0] === 'Senior_Developer'
     }
 
     /**
@@ -51,7 +54,7 @@ export class ProjectsComponent {
         let params = new HttpParams()
             .set('queryType', 'getProjects');
         this.projects = new Array();
-        let response = this.http.get<ProjectData[]>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects",
+        let response = this.http.get<ProjectData[]>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/projects",
             {
                 params: params,
                 headers: new HttpHeaders({
@@ -130,7 +133,7 @@ export class CreateProjectDialog {
             'Authorization': localStorage.getItem('token')
         });
 
-        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params });
+        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users", { headers: headers, params: params });
         response.subscribe((data) => {
             console.log(data);
             data.forEach(profile => {
@@ -214,7 +217,7 @@ export class CreateProjectDialog {
  */
 function postToDynamo(http, query, snack, router, success, fail) {
     console.log(query);
-    http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects', query,
+    http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/projects', query,
         {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

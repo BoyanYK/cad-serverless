@@ -59,11 +59,6 @@
     3.  Options available after login differ based on user role  
         _Everyone has access to a personal details page where they can update their skills and short information about themselves_
         _Everyone has a notification page where all actions that have not been seen are_
-        ```mermaid
-        graph TD;
-         Visit_Login_Page-->Submit_Details;
-         Submit_Details-->AWS_Cognito_Authentication;
-        ```
 -   **User Creation**
     1.  Admin is logged in
     2.  Selects create new user
@@ -143,15 +138,11 @@
                 ]
               }
             ```
-        ### 4. Libraries and other resources
+### 4. Libraries and other resources
 -   [AWS Cognito User Creation](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-user-identity-pools-javascript-examples.html)
 -   [AWS Cognito User Authentication](https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-identity-user-pools-javascript-example-authenticating-admin-created-user.html)
--   [Notifications](https://github.com/jacob-meacham/angular-notification-icons)
 -   [Login routing](https://medium.com/@ryanchenkie_40935/angular-authentication-using-route-guards-bf7a4ca13ae3)
 -   [Toolbar](https://theinfogrid.com/tech/developers/angular/responsive-navbar-angular-flex-layout/)
--   [Colour palette](https://www.materialpalette.com/)
 -   [FlexLayout](https://blog.angularindepth.com/angular-flex-layout-flexbox-and-grid-layout-for-angular-component-6e7c24457b63)
--   [Dynamo + Lambda Streams](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb-example.html)
--   [Profiles Masonry Grid](https://www.npmjs.com/package/ng-masonry-grid)
 -   [Flatten Objects](https://www.npmjs.com/package/flat)
 -   [Authorization](https://aws.amazon.com/blogs/mobile/integrating-amazon-cognito-user-pools-with-api-gateway/)

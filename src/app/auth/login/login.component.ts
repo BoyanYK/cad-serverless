@@ -110,7 +110,7 @@ export class LoginComponent {
 
       onFailure: function (err) {
         //console.log(new Error().stack);
-        that.route = '../error';
+        alert("User/Password combination does not exist, Please try again");
       },
 
       mfaRequired: function (codeDeliveryDetails) {

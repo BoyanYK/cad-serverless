@@ -8,38 +8,38 @@
   <main>
     <h2>Project Name: {{project['name']}}</h2>
     <div>
-      <h3 class="h3-status">Project Manager: {{project['manager']}}</h3>
+      <h3 class="h3-status">Project Manager: {{project.manager}}</h3>
     </div>
     <div>
       <h3>Project Details:</h3>
       <div fxFlex></div>
       <div>
         <!-- TODO Change project manager comparison below (3 times) to actual username  -->
-        <button *ngIf="project['manager'] === 'useremail' && !detailsEditable" mat-icon-button (click)="toggleDetailsEdit()">
+        <button *ngIf="isManager && !detailsEditable" mat-icon-button (click)="toggleDetailsEdit(false)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button *ngIf="project['manager'] === 'useremail' && detailsEditable" mat-icon-button (click)="toggleDetailsEdit()">
+        <button *ngIf="isManager && detailsEditable" mat-icon-button (click)="toggleDetailsEdit(false)">
           <mat-icon>cancel</mat-icon>
         </button>
-        <button *ngIf="project['manager'] === 'useremail' && detailsEditable" mat-icon-button (click)="toggleDetailsEdit(true)">
+        <button *ngIf="isManager && detailsEditable" mat-icon-button (click)="toggleDetailsEdit(true)">
           <mat-icon>done</mat-icon>
         </button>
       </div>
     </div>
     <mat-grid-list cols="4" rowHeight="100px">
       <mat-grid-tile [colspan]=2 [rowspan]=2>
-        <p *ngIf="project['manager'] != 'useremail' || !detailsEditable">Lorem ipsum dolor sit amet consectetur
+        <p *ngIf="!isManager || !detailsEditable">Lorem ipsum dolor sit amet consectetur
           adipisicing
           elit. A, harum exercitationem. Dolore cum modi, magni, ea
           temporibus quis beatae, incidunt tenetur accusantium nobis itaque id? Voluptatem assumenda magnam eius
           quaerat.{{project.description}}</p>
-        <mat-form-field *ngIf="project['manager'] === 'useremail' && detailsEditable" class="descInput">
+        <mat-form-field *ngIf="isManager && detailsEditable" class="descInput">
           <textarea [(ngModel)]="project.description" matInput matTextareaAutosize matAutosizeMinRows=1 placeholder="Textarea">{{project.description}}</textarea>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile [colspan]=2 [rowspan]=1>
         <!-- TODO need to change to actual current user name -->
-        <ng-container *ngIf="project['manager'] === 'useremail' && detailsEditable">
+        <ng-container *ngIf="isManager && detailsEditable">
           <b style="padding-right: 10px">Add Developers to Project</b>
           <mat-form-field>
             <mat-select [formControl]="devSelect" placeholder="Developers" multiple>
@@ -57,7 +57,7 @@
           </mat-select>
         </mat-form-field>
       </mat-grid-tile>
-      <mat-grid-tile [colspan]=2 [rowspan]=1>
+      <mat-grid-tile [colspan]=4 [rowspan]=1>
         <h3>Developers:</h3>
         <mat-chip-list class="chipList">
           <mat-chip *ngFor="let dev of project['developers']  ">
@@ -73,6 +73,10 @@
             <h3>Task Name: {{task.name}}</h3>
             <div fxFlex></div>
             <div *ngIf="task.assignee === user">
+              <!-- <button mat-icon-button (click)="editStatus()">
+                <mat-icon>edit</mat-icon>
+              </button> -->
+
               <button *ngIf="!changeStatus && task.assignee === user" mat-icon-button (click)="editStatus(i)">
                 <mat-icon>edit</mat-icon>
               </button>

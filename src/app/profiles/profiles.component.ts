@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatIconModule } from '@angular/material/icon';
-//TODO uncomment once layout is done
 import { RoleGuardService } from '../auth/role-guard.service';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Profile } from '../user/user.component';
@@ -29,7 +26,7 @@ export class ProfilesComponent implements OnInit {
       'Authorization': localStorage.getItem('token')
     })
     this.profiles = [];
-    var response = this.http.get<Profile[]>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params });
+    var response = this.http.get<Profile[]>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users", { headers: headers, params: params });
     response.subscribe((data) => {
       data.forEach(element => {
         try {
@@ -47,7 +44,6 @@ export class ProfilesComponent implements OnInit {
    * get User Type
    */
   ngOnInit(): void {
-    //TODO uncomment once layout is done
     this.roleGuardService.userType.subscribe(value => this.userType = value);
   }
 }

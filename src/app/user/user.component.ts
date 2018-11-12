@@ -93,7 +93,7 @@ export class UserComponent {
    * Update User Profile to Database
    */
   updateUserProfile() {
-    this.http.put('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users', this.profile)
+    this.http.put('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users', this.profile)
       .subscribe(
         res => {
           console.log(res);
@@ -123,7 +123,7 @@ export class UserComponent {
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token')
     })
-    this.http.get<Profile>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params })
+    this.http.get<Profile>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/Prod/users", { headers: headers, params: params })
       .subscribe((data) => {
         this.profile = data[0];
       });

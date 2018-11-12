@@ -16,7 +16,7 @@
 
   <main class="mat-typography">
     <mat-form-field>
-      <input matInput [(ngModel)]="userQuery" placeholder="Lookup..">
+      <input matInput [(ngModel)]="userQuery" placeholder="Look for users..">
     </mat-form-field>
     <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center flex-center">
       <ng-container *ngFor="let profile of profiles | filter:userQuery">
