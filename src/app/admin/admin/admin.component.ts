@@ -46,7 +46,7 @@ export class AdminComponent {
      */
     createNewUser(): void {
         var headers = new HttpHeaders()
-            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Content-Type', 'application/json')
             .set('Authorization', localStorage.getItem('token'));
         var params = new HttpParams()
             .set('firstName', this.createUserForm.controls['firstName'].value)

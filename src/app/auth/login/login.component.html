@@ -9,7 +9,7 @@
             <input matInput placeholder="Username" formControlName="username">
           </mat-form-field>
           <mat-form-field class="input-field">
-            <input matInput placeholder="Password" formControlName="password">
+            <input matInput type="password" placeholder="Password" formControlName="password">
           </mat-form-field>
           <button fxLayoutAlign="end" mat-flat-button id="Submit" color="primary">Submit</button>
         </form>
@@ -17,7 +17,7 @@
 
       <form *ngIf="updatePassword" [formGroup]="updatePasswordForm">
         <mat-form-field class="input-field">
-          <input matInput placeholder="New Password" formControlName="newPassword">
+          <input matInput type="password" placeholder="New Password" formControlName="newPassword">
         </mat-form-field>
         <button mat-flat-button (click)="onUpdatePassword()" color="primary">Update Password</button>
 
