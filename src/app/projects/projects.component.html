@@ -18,9 +18,6 @@
   </nav>
 
   <main class="mat-typography">
-    <!-- <ng-masonry-grid>
-      <ng-masonry-grid-item *ngFor="let project of projects | filter:search" (click)="openProject(project)"> -->
-
     <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="center flex-center">
       <ng-container *ngFor="let project of projects | filter:search">
         <mat-card class="card" (click)="openProject(project)">
@@ -45,10 +42,6 @@
         </mat-card>
       </ng-container>
     </div>
-
-
-    <!--   </ng-masonry-grid-item>
-    </ng-masonry-grid> -->
   </main>
 
   <aside></aside>

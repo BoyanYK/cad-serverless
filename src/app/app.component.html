@@ -8,18 +8,12 @@
 
   <a [routerLink]="['../projects']" mat-button (click)="getNotifications()">Projects</a>
   <span class="example-spacer"></span>
-  <!-- <a [routerLink]="['../notifications']" mat-button>
-    <mat-icon>notifications</mat-icon>
-  </a> -->
-  <!-- <a mat-button (click)="incrNots()">
-    <mat-icon matBadge={{notificationsCounter}}>notifications</mat-icon>
-  </a> -->
 
   <button mat-icon-button [matMenuTriggerFor]="menu">
-    <ng-container *ngIf="notificationsCounter !== 0 && notificationsCounter !== null">
-      <mat-icon color="warn" matBadge={{notificationsCounter}}>notifications</mat-icon>
+    <ng-container *ngIf="notifications.length !== 0 && notifications !== null">
+      <mat-icon color="warn" matBadge={{notifications.length}}>notifications</mat-icon>
     </ng-container>
-    <ng-container *ngIf="notificationsCounter === 0 || notificationsCounter === null">
+    <ng-container *ngIf="notifications.length === 0 || notifications === null">
       <mat-icon>notifications</mat-icon>
     </ng-container>
   </button>
@@ -29,10 +23,9 @@
     </button>
   </mat-menu>
 
-  <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" (click)="getNotifications()" mat-button>Admin Page
+  <a *ngIf="userType === 'Administrator'" [routerLink]="['../admin']" (click)="getNotifications()" mat-button>Admin
+    Page
   </a>
-
-  <!-- <a [routerLink]="['../logout']" mat-button>Logout</a> -->
   <button [routerLink]="['../']" mat-button (click)="onLogout()">Logout</button>
 </mat-toolbar>
 

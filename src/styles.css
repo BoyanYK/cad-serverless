@@ -26,3 +26,39 @@ body {
 .snackbar-style-fail .mat-simple-snackbar-action {
   color: wheat;
 }
+
+.container {
+  display: grid;
+  grid-template-areas:
+    "header header header"
+    "nav content side"
+    "footer footer footer";
+
+  grid-template-columns: 12% 1fr 12%;
+  grid-auto-rows: auto 1fr auto;
+  grid-gap: 10px;
+
+  /* height: 100vh; */
+}
+
+header {
+  grid-area: header;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+main {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.input-field {
+  margin-right: 5px;
+}
+

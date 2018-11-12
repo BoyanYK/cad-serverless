@@ -19,12 +19,6 @@ header {
   justify-content: space-between;
 }
 
-/* main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-   */
 .example-spacer {
   flex: 1 1 auto;
 }

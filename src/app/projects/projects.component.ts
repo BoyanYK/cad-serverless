@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 
 
 export interface ProjectData {
-    manager: string;
-    team_size: number;
-    skills_needed: string[];
-    members: string[];
-    description: string;
-    tasks: Task[]
+    uniqueProjectID: string,
+    name: string,
+    manager: string,
+    skills: string[],
+    developers: string[],
+    description: string,
 }
 
 export interface Dev {
@@ -35,30 +35,22 @@ export interface Task {
     templateUrl: './projects.component.html',
     styleUrls: ['./projects.component.css'],
 })
-export class ProjectsComponent implements OnInit {
-    id: string;
-    search: string;
-    projects: Object[]; //TODO extract Senior Devs with first/last name + username, to use in project creation
+export class ProjectsComponent {
+    private search: string;
+    private projects: ProjectData[]; //TODO extract Senior Devs with first/last name + username, to use in project creation
     constructor(public dialog: MatDialog, public http: HttpClient, public router: Router) {
         this.search = '';
-        let a: Task = {
-            name: "Task",
-            date_assigned: Date.now(),
-            date_due: Date.now(),
-            description: "Pls",
-            assignee: "Boyan",
-            status: "done"
-        }
-
         this.getProjects();
     }
 
+    /**
+     * Get List of all Projects from API
+     */
     getProjects(): void {
-        var params = new HttpParams()
+        let params = new HttpParams()
             .set('queryType', 'getProjects');
         this.projects = new Array();
-        //TODO structure/interface Project to use insead of <any>
-        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects",
+        let response = this.http.get<ProjectData[]>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects",
             {
                 params: params,
                 headers: new HttpHeaders({
@@ -68,25 +60,22 @@ export class ProjectsComponent implements OnInit {
             });
         response.subscribe((data) => {
             data.forEach(element => {
-                this.projects.push({
-                    uniqueProjID: element['uniqueProjID'],
-                    name: element.name,
-                    manager: element.manager,
-                    skills: element.skills,
-                    description: element.description,
-                    developers: element.developers
-                })
+                this.projects.push(element);
             });
         });
     }
 
-    ngOnInit() {
-    }
-
-
+    /**
+     * Open the Project page of the project that has been clicked
+     * @param project Project to open
+     */
     openProject(project): void {
         this.router.navigate(['../project/' + project.uniqueProjID]);
     }
+
+    /**
+     * Create a dialog for new project creation
+     */
     openNewProjectDialog() {
 
         const dialogConfig = new MatDialogConfig();
@@ -94,13 +83,6 @@ export class ProjectsComponent implements OnInit {
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.width = '500px';
-        dialogConfig.data = {
-            seniorDevs: [
-                { value: "porreq", viewValue: "porreq" },
-                { value: "Dev2", viewValue: "Dev2" },
-                { value: "Dev3", viewValue: "Dev3" }
-            ]
-        };
 
         this.dialog.open(CreateProjectDialog, dialogConfig);
     }
@@ -108,25 +90,38 @@ export class ProjectsComponent implements OnInit {
 
 @Component({
     selector: 'create-project-dialog',
-    styleUrls: ['create-project-dialog.css'],
     templateUrl: 'create-project-dialog.html',
 })
 export class CreateProjectDialog {
-    visible = true;
-    selectable = true;
-    removable = true;
-    addOnBlur = true;
-
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-    seniorDevs: Object[];
-    project: FormGroup;
-    skills = [];
+    private seniorDevs: Object[];
+    private project: FormGroup;
+    private skills = [];
+    /**
+     * Init services
+     * @param http Client for API requests
+     * @param snackBar snackbar for API responses visualisation
+     * @param router for navigation
+     * @param formBuilder for creating the dialog form
+     * @param dialogRef for closing the dialog
+     */
     constructor(public http: HttpClient, private snackBar: MatSnackBar, public router: Router, private formBuilder: FormBuilder,
-        public dialogRef: MatDialogRef<CreateProjectDialog>,
-        @Inject(MAT_DIALOG_DATA) data/* , public seniorDevs: Dev[] */) {
+        public dialogRef: MatDialogRef<CreateProjectDialog>) {
         this.seniorDevs = [];
+        this.project = formBuilder.group({
+            name: ['', Validators.required],
+            manager: ['', Validators.required],
+            skills: [''],
+            description: ['', Validators.required]
+        });
+        this.getSeniorDevelopers();
+    }
 
+    /**
+     * Get List of Senior Developers
+     */
+    getSeniorDevelopers(): void {
         var params = new HttpParams()
             .set('queryType', 'getSeniorDevs');
         var headers = new HttpHeaders({
@@ -144,24 +139,17 @@ export class CreateProjectDialog {
                 })
             });
         });
-        /* this.seniorDevs = [
-          { value: "Dev1", viewValue: "Dev1" },
-          { value: "Dev2", viewValue: "Dev2" },
-          { value: "Dev3", viewValue: "Dev3" }
-        ]; */
-        this.project = formBuilder.group({
-            name: ['', Validators.required],
-            manager: ['', Validators.required],
-            skills: [''],
-            description: ['', Validators.required]
-        });
     }
 
+    /**
+     * Add new skill to list
+     * @param event Chip event
+     */
     add(event: MatChipInputEvent): void {
         console.log(event.value);
         const input = event.input;
         const value = event.value;
-        // Add our fruit
+        // Add new skill
         if ((value || '').trim()) {
             this.skills.push(value.trim());
         }
@@ -172,6 +160,10 @@ export class CreateProjectDialog {
         }
     }
 
+    /**
+     * Remove skill from list
+     * @param skill to remove
+     */
     remove(skill: string): void {
         const index = this.skills.indexOf(skill);
 
@@ -180,6 +172,9 @@ export class CreateProjectDialog {
         }
     }
 
+    /**
+     * Submit new Project to database
+     */
     submit(): void {
         if (this.project.invalid || this.skills === undefined || this.skills.length == 0) {
             console.log(this.project);
@@ -198,12 +193,24 @@ export class CreateProjectDialog {
         this.dialogRef.close();
     }
 
+    /**
+     * Close dialog
+     */
     close() {
         this.dialogRef.close();
     }
 
 }
 
+/**
+ * Function to handle the posting to Dynamo
+ * @param http Client
+ * @param query Query to execute
+ * @param snack snackbar for response
+ * @param router for navigation
+ * @param success message on success
+ * @param fail message on fail
+ */
 function postToDynamo(http, query, snack, router, success, fail) {
     console.log(query);
     http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects', query,

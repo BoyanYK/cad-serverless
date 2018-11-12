@@ -4,14 +4,15 @@
   <mat-grid-tile>
     <div id="container">
       <div *ngIf="!updatePassword" id="parent">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form_login">
+        <form fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx" [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+          id="form_login">
           <mat-form-field class="input-field">
             <input matInput placeholder="Username" formControlName="username">
           </mat-form-field>
           <mat-form-field class="input-field">
             <input matInput placeholder="Password" formControlName="password">
           </mat-form-field>
-          <button mat-flat-button id="Submit" color="primary">Submit</button>
+          <button fxLayoutAlign="end" mat-flat-button id="Submit" color="primary">Submit</button>
         </form>
       </div>
       <br>
