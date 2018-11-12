@@ -62,7 +62,8 @@ export class AdminComponent implements OnInit {
           };
          */
         var headers = new HttpHeaders()
-            .set('Content-Type', 'application/x-www-form-urlencoded');
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Authorization', localStorage.getItem('token'));
         var params = new HttpParams()
             .set('firstName', this.createUserForm.controls['firstName'].value)
             .set('lastName', this.createUserForm.controls['lastName'].value)

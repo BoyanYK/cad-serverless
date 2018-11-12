@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -89,7 +89,7 @@ export class UserComponent implements OnInit {
   }
 
   updateUserProfiles() {
-    this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', this.profile)
+    this.http.put('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users', this.profile)
       .subscribe(
         res => {
           console.log(res);
@@ -109,17 +109,24 @@ export class UserComponent implements OnInit {
   }
 
   getProfile() {
-    var params = new HttpParams({ fromString: 'queryType=query' });
-    console.log(decode(localStorage.getItem('token'))["username"]);
-    var query = {
-      TableName: "UserProfiles",
-      KeyConditionExpression: "username = :u",
-      ExpressionAttributeValues: {
-        ":u": decode(localStorage.getItem("token"))["username"]
-      }
-    }
+    //var params = new HttpParams({ fromString: 'queryType=getUser' });
+    var params = new HttpParams()
+      .set('queryType', 'getUser')
+      .set('username', decode(localStorage.getItem('token'))["username"]);
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    })
+    // console.log(decode(localStorage.getItem('token'))["username"]);
+    // var query = {
+    //   TableName: "UserProfiles",
+    //   KeyConditionExpression: "username = :u",
+    //   ExpressionAttributeValues: {
+    //     ":u": decode(localStorage.getItem("token"))["username"]
+    //   }
+    // }
 
-    this.http.post<Profile>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params })
+    this.http.get<Profile>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params })
       .subscribe((data) => {
         this.profile = data[0];
       });

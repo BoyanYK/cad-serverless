@@ -54,13 +54,11 @@ export class ProjectsComponent implements OnInit {
     }
 
     getProjects(): void {
-        var params = new HttpParams({ fromString: 'queryType=scan' });
-        var query = {
-            TableName: 'Projects'
-        };
+        var params = new HttpParams()
+            .set('queryType', 'getProjects');
         this.projects = new Array();
-        //TODO structure/interface UserProfile to use insead of <any>
-        var response = this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query,
+        //TODO structure/interface Project to use insead of <any>
+        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects",
             {
                 params: params,
                 headers: new HttpHeaders({
@@ -129,17 +127,17 @@ export class CreateProjectDialog {
         @Inject(MAT_DIALOG_DATA) data/* , public seniorDevs: Dev[] */) {
         this.seniorDevs = [];
 
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token')
-            })
-        };
+        var params = new HttpParams()
+            .set('queryType', 'getSeniorDevs');
+        var headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
 
-        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/Get_Senior_Devs", httpOptions);
+        var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params });
         response.subscribe((data) => {
             console.log(data);
-            data.Items.forEach(profile => {
+            data.forEach(profile => {
                 this.seniorDevs.push({
                     value: profile.username,
                     viewValue: profile.first_name + " " + profile.last_name,
@@ -155,7 +153,6 @@ export class CreateProjectDialog {
             name: ['', Validators.required],
             manager: ['', Validators.required],
             skills: [''],
-            teamSize: ['', Validators.required],
             description: ['', Validators.required]
         });
     }
@@ -189,14 +186,11 @@ export class CreateProjectDialog {
             return;
         }
         var tableUpdate = {
-            TableName: 'Projects',
-            Item: {
-                uniqueProjID: btoa(this.project.controls['name'].value + "<>" + this.project.controls['manager'].value + "<>" + Date.now()),
-                project_name: this.project.controls['name'].value,
-                project_manager: this.project.controls['manager'].value,
-                skills: this.skills,
-                description: this.project.controls['description'].value
-            }
+            uniqueProjID: btoa(this.project.controls['name'].value + "<>" + this.project.controls['manager'].value + "<>" + Date.now()),
+            name: this.project.controls['name'].value,
+            manager: this.project.controls['manager'].value,
+            skills: this.skills,
+            description: this.project.controls['description'].value
         }
         postToDynamo(this.http, tableUpdate, this.snackBar, this.router, "Project created successfully", "Project creation failed");
 
@@ -212,7 +206,13 @@ export class CreateProjectDialog {
 
 function postToDynamo(http, query, snack, router, success, fail) {
     console.log(query);
-    http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', query)
+    http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects', query,
+        {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            })
+        })
         .subscribe(
             res => {
                 console.log(res);
@@ -220,7 +220,7 @@ function postToDynamo(http, query, snack, router, success, fail) {
                     panelClass: ['snackbar-style-success'],
                     duration: 1500
                 });
-                router.navigate(['../project/' + query.Item.uniqueProjID]);
+                router.navigate(['../project/' + query.uniqueProjID]);
             },
             err => {
                 console.log("Error occured", err);

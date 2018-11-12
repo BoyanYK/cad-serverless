@@ -19,9 +19,6 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field class="input">
-    <input matInput type="number" required placeholder="Team Size" formControlName="teamSize">
-  </mat-form-field>
-  <mat-form-field class="input">
     <mat-chip-list required #skillList class="mat-chip-list">
       <mat-chip required *ngFor="let skill of skills" [removable]="removable" (removed)="remove(skill)">
         {{skill}}

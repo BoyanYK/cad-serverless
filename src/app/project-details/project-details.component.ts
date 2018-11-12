@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import decode from 'jwt-decode';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
@@ -36,16 +36,11 @@ export class ProjectDetailsComponent implements OnInit {
         alert("You must select at least one developer");
         return;
       }
+      if (this.project['developers'] === undefined) this.project['developers'] = [];
       this.project['developers'].push(...this.devSelect.value);
       this.project['status'] = this.statusSelect.value;
-      var updateProjectQuery = {
-        TableName: "Projects",
-        Item: this.project
-
-      }
-      console.log(updateProjectQuery);
       this.notifyDevelopers(this.devSelect.value, this.project['uniqueProjID'], this.project['name']);
-      this.updateProject(updateProjectQuery);
+      this.updateProject();
     }
     this.updateDevelopers();
     console.log(this.devSelect.value);
@@ -66,10 +61,16 @@ export class ProjectDetailsComponent implements OnInit {
     response.subscribe(data => console.log(data));
   }
 
-  updateProject(updateQuery): void {
+  updateProject(): void {
     // TODO currently adding a developer overwrites old ones!
     // * seems to be done now ^
-    this.http.post('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/update-user-profiles', updateQuery)
+    this.http.put('https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects', this.project,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        })
+      })
       .subscribe(
         res => {
           console.log(res);
@@ -94,19 +95,25 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   updateDevelopers(): void {
-    var params = new HttpParams({ fromString: 'queryType=scan' });
-    var query = {
-      TableName: 'UserProfiles',
-      FilterExpression: "#rl = :r",
-      ExpressionAttributeNames: {
-        "#rl": "role"
-      },
-      ExpressionAttributeValues: {
-        ":r": "Developer"
-      }
-    };
+    // var params = new HttpParams({ fromString: 'queryType=scan' });
+    // var query = {
+    //   TableName: 'UserProfiles',
+    //   FilterExpression: "#rl = :r",
+    //   ExpressionAttributeNames: {
+    //     "#rl": "role"
+    //   },
+    //   ExpressionAttributeValues: {
+    //     ":r": "Developer"
+    //   }
+    // };
+    var params = new HttpParams()
+      .set('queryType', 'getDevelopers')
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    })
 
-    this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params })
+    this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/users", { headers: headers, params: params })
       .subscribe((data) => {
         console.log(data);
         this.developers = []; //Clear list to avoid duplication
@@ -121,21 +128,20 @@ export class ProjectDetailsComponent implements OnInit {
 
   getProjectInformation(project_id: string): void {
     //TODO fetch from dynamo
-    var params = new HttpParams({ fromString: 'queryType=query' });
-    var query = {
-      TableName: "Projects",
-      KeyConditionExpression: "uniqueProjID = :p",
-      ExpressionAttributeValues: {
-        ":p": project_id
-      }
-    };
-    var response = this.http.post<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/FetchDynamo", query, { params: params });
+    var params = new HttpParams()
+      .set('queryType', 'getProject')
+      .set('projectId', project_id);
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    })
+    var response = this.http.get<any>("https://gxyhy2wqxh.execute-api.eu-west-2.amazonaws.com/test/projects", { headers: headers, params: params });
     response.subscribe((data) => {
       data.forEach(element => {
         this.project = {
           uniqueProjID: element['uniqueProjID'],
-          name: element.name,
-          manager: element.manager,
+          name: element['name'],
+          manager: element['manager'],
           skills: element.skills,
           description: element.description,
           status: element.status,
